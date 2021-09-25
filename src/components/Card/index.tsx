@@ -10,8 +10,8 @@ const cards = {
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 const RATIO = 16 / 9;
-const CARD_WIDTH = SCREEN_WIDTH * 0.8;
-const CARD_HEIGHT = CARD_WIDTH / RATIO;
+export const CARD_WIDTH = SCREEN_WIDTH * 0.8;
+export const CARD_HEIGHT = CARD_WIDTH / RATIO;
 
 type Index = 1 | 2 | 3 | 4;
 type CardType = `Card${Index}`;
