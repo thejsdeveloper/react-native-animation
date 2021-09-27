@@ -1,5 +1,6 @@
 import React from "react";
-import { StyleSheet, ScrollView } from "react-native";
+import { StyleSheet } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import StyleGuide from "../../components/StyleGuide";
 import SwipeRow from "./SwipeRow";
 
@@ -39,10 +40,12 @@ const BUCKET_LIST = [
 ];
 
 const DemoSwipeToDelete = () => {
+  const scrollRef = React.useRef(null);
+
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView ref={scrollRef} style={styles.container}>
       {BUCKET_LIST.map((list) => (
-        <SwipeRow key={list.id} {...list} />
+        <SwipeRow key={list.id} {...list} simultaneousHandlers={scrollRef} />
       ))}
     </ScrollView>
   );

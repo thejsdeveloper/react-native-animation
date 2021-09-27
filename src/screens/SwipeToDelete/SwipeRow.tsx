@@ -3,6 +3,7 @@ import { Dimensions, StyleSheet, Text, View } from "react-native";
 import {
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
+  PanGestureHandlerProps,
 } from "react-native-gesture-handler";
 import Animated, {
   useAnimatedGestureHandler,
@@ -20,12 +21,15 @@ type Contexttype = {
   offsetX: number;
 };
 
-type SwipeRowProps = {
+type SwipeRowProps = Pick<PanGestureHandlerProps, "simultaneousHandlers"> & {
   id: string;
   title: string;
 };
-const SwipeRow = ({ title }: SwipeRowProps) => {
+const SwipeRow = ({ title, simultaneousHandlers }: SwipeRowProps) => {
   const translateX = useSharedValue(0);
+  const taskHeight = useSharedValue(LIST_ITEM_HEIGHT);
+  const taskMarginVertical = useSharedValue(StyleGuide.spacing);
+  const taskOpacity = useSharedValue(1);
 
   const onGestureEvent = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
@@ -39,6 +43,9 @@ const SwipeRow = ({ title }: SwipeRowProps) => {
     },
     onEnd: () => {
       if (translateX.value < TRASLATION_THRESHOLD) {
+        taskHeight.value = withTiming(0);
+        taskMarginVertical.value = withTiming(0);
+        taskOpacity.value = withTiming(0);
         translateX.value = withTiming(-SCREEN_WIDTH);
       } else {
         translateX.value = withTiming(0);
@@ -62,8 +69,16 @@ const SwipeRow = ({ title }: SwipeRowProps) => {
     };
   });
 
+  const rRowContainerStyle = useAnimatedStyle(() => {
+    return {
+      height: taskHeight.value,
+      marginVertical: taskMarginVertical.value,
+      opacity: taskOpacity.value,
+    };
+  });
+
   return (
-    <Animated.View style={styles.rowContainer}>
+    <Animated.View style={[styles.rowContainer, rRowContainerStyle]}>
       <Animated.View style={[styles.iconContainer, rIconContainerStyle]}>
         <FontAwesome5
           name={"trash-alt"}
@@ -71,7 +86,10 @@ const SwipeRow = ({ title }: SwipeRowProps) => {
           color={"red"}
         />
       </Animated.View>
-      <PanGestureHandler {...{ onGestureEvent }}>
+      <PanGestureHandler
+        simultaneousHandlers={simultaneousHandlers}
+        {...{ onGestureEvent }}
+      >
         <Animated.View style={[styles.task, rTaskStyle]}>
           <Text>{title}</Text>
         </Animated.View>
@@ -86,15 +104,15 @@ const styles = StyleSheet.create({
   rowContainer: {
     width: "100%",
     alignItems: "center",
+    // marginVertical: StyleGuide.spacing,
   },
   iconContainer: {
     height: LIST_ITEM_HEIGHT,
-    position: "absolute",
     width: LIST_ITEM_HEIGHT,
+    position: "absolute",
     right: 0,
     alignItems: "center",
     justifyContent: "center",
-    marginVertical: StyleGuide.spacing,
     marginHorizontal: StyleGuide.spacing * 2.2,
   },
 
@@ -105,7 +123,6 @@ const styles = StyleSheet.create({
     width: 0.95 * SCREEN_WIDTH,
     backgroundColor: "white",
     paddingHorizontal: StyleGuide.spacing * 2.2,
-    marginVertical: StyleGuide.spacing,
     borderRadius: StyleGuide.spacing,
     shadowColor: "#4a4a4a",
     shadowOffset: {
