@@ -6,6 +6,7 @@ import {
   PanGestureHandlerProps,
 } from "react-native-gesture-handler";
 import Animated, {
+  runOnJS,
   useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
@@ -13,6 +14,7 @@ import Animated, {
 } from "react-native-reanimated";
 import StyleGuide from "../../components/StyleGuide";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { Task } from ".";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 const LIST_ITEM_HEIGHT = 60;
@@ -22,10 +24,10 @@ type Contexttype = {
 };
 
 type SwipeRowProps = Pick<PanGestureHandlerProps, "simultaneousHandlers"> & {
-  id: string;
-  title: string;
+  task: Task;
+  onDismiss: (task: Task) => void;
 };
-const SwipeRow = ({ title, simultaneousHandlers }: SwipeRowProps) => {
+const SwipeRow = ({ task, simultaneousHandlers, onDismiss }: SwipeRowProps) => {
   const translateX = useSharedValue(0);
   const taskHeight = useSharedValue(LIST_ITEM_HEIGHT);
   const taskMarginVertical = useSharedValue(StyleGuide.spacing);
@@ -46,7 +48,15 @@ const SwipeRow = ({ title, simultaneousHandlers }: SwipeRowProps) => {
         taskHeight.value = withTiming(0);
         taskMarginVertical.value = withTiming(0);
         taskOpacity.value = withTiming(0);
-        translateX.value = withTiming(-SCREEN_WIDTH);
+        translateX.value = withTiming(
+          -SCREEN_WIDTH,
+          undefined,
+          (isFinished) => {
+            if (isFinished && onDismiss) {
+              runOnJS(onDismiss)(task);
+            }
+          }
+        );
       } else {
         translateX.value = withTiming(0);
       }
@@ -91,7 +101,7 @@ const SwipeRow = ({ title, simultaneousHandlers }: SwipeRowProps) => {
         {...{ onGestureEvent }}
       >
         <Animated.View style={[styles.task, rTaskStyle]}>
-          <Text>{title}</Text>
+          <Text>{task.title}</Text>
         </Animated.View>
       </PanGestureHandler>
     </Animated.View>

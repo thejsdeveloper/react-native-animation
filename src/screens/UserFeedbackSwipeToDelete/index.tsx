@@ -4,7 +4,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import StyleGuide from "../../components/StyleGuide";
 import UserFeedbackSwipeRow from "./UserFeedbackSwipeRow";
 
-const BUCKET_LIST = [
+const BUCKET_LIST: Task[] = [
   {
     id: "1",
     title: "Get Vegitables 🥦",
@@ -38,17 +38,28 @@ const BUCKET_LIST = [
     title: "Reading 📚",
   },
 ];
+export type Task = {
+  id: string;
+  title: string;
+};
 
 const DemoSwipeToDeleteWithUserFeedback = () => {
   const scrollRef = React.useRef(null);
 
+  const [tasks, setTasks] = React.useState(BUCKET_LIST);
+
+  const onDismiss = React.useCallback((task: Task) => {
+    setTasks((storedTask) => storedTask.filter((t) => t.id !== task.id));
+  }, []);
+
   return (
     <ScrollView ref={scrollRef} style={styles.container}>
-      {BUCKET_LIST.map((list) => (
+      {tasks.map((task) => (
         <UserFeedbackSwipeRow
-          key={list.id}
-          {...list}
+          key={task.id}
+          task={task}
           simultaneousHandlers={scrollRef}
+          onDismiss={onDismiss}
         />
       ))}
     </ScrollView>
