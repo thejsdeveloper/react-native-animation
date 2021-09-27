@@ -1,9 +1,12 @@
 import React from "react";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Pressable, StyleSheet, Text } from "react-native";
 import {
+  GestureEvent,
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
   PanGestureHandlerProps,
+  TapGestureHandler,
+  TapGestureHandlerEventPayload,
 } from "react-native-gesture-handler";
 import Animated, {
   runOnJS,
@@ -15,10 +18,11 @@ import Animated, {
 import StyleGuide from "../../components/StyleGuide";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Task } from ".";
+import { clamp } from "react-native-redash";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 const LIST_ITEM_HEIGHT = 60;
-const TRASLATION_THRESHOLD = -0.3 * SCREEN_WIDTH;
+const TRASLATION_THRESHOLD = -0.2 * SCREEN_WIDTH;
 type Contexttype = {
   offsetX: number;
 };
@@ -41,29 +45,19 @@ const UserFeedbackSwipeRow = ({
     PanGestureHandlerGestureEvent,
     Contexttype
   >({
-    onActive: (event) => {
-      // This is to avoid right side swipe
-      if (event.translationX < 0) {
-        translateX.value = event.translationX;
-      }
+    onStart: (_, ctx) => {
+      ctx.offsetX = translateX.value;
     },
-    onEnd: () => {
-      if (translateX.value < TRASLATION_THRESHOLD) {
-        taskHeight.value = withTiming(0);
-        taskMarginVertical.value = withTiming(0);
-        taskOpacity.value = withTiming(0);
-        translateX.value = withTiming(
-          -SCREEN_WIDTH,
-          undefined,
-          (isFinished) => {
-            if (isFinished && onDismiss) {
-              runOnJS(onDismiss)(task);
-            }
-          }
-        );
-      } else {
-        translateX.value = withTiming(0);
-      }
+    onActive: (event, ctx) => {
+      translateX.value = clamp(
+        ctx.offsetX + event.translationX,
+        TRASLATION_THRESHOLD,
+        0
+      );
+    },
+    onEnd: (_, ctx) => {
+      const isRightSwipped = translateX.value > ctx.offsetX * (2 / 3);
+      translateX.value = withTiming(isRightSwipped ? 0 : TRASLATION_THRESHOLD);
     },
   });
 
@@ -79,7 +73,7 @@ const UserFeedbackSwipeRow = ({
 
   const rIconContainerStyle = useAnimatedStyle(() => {
     return {
-      opacity: withTiming(translateX.value < TRASLATION_THRESHOLD ? 1 : 0),
+      opacity: withTiming(translateX.value < TRASLATION_THRESHOLD / 3 ? 1 : 0),
     };
   });
 
@@ -91,15 +85,30 @@ const UserFeedbackSwipeRow = ({
     };
   });
 
+  const handleTapGesture = useAnimatedGestureHandler<
+    GestureEvent<TapGestureHandlerEventPayload>
+  >({
+    onEnd: () => {
+      taskHeight.value = withTiming(0);
+      taskMarginVertical.value = withTiming(0);
+      taskOpacity.value = withTiming(0, undefined, (finished) => {
+        runOnJS(onDismiss)(task);
+      });
+    },
+  });
+
   return (
     <Animated.View style={[styles.rowContainer, rRowContainerStyle]}>
-      <Animated.View style={[styles.iconContainer, rIconContainerStyle]}>
-        <FontAwesome5
-          name={"trash-alt"}
-          size={LIST_ITEM_HEIGHT * 0.4}
-          color={"red"}
-        />
-      </Animated.View>
+      <TapGestureHandler onGestureEvent={handleTapGesture}>
+        <Animated.View style={[styles.iconContainer, rIconContainerStyle]}>
+          <FontAwesome5
+            name={"trash-alt"}
+            size={LIST_ITEM_HEIGHT * 0.4}
+            color="#ff1a1a"
+          />
+          <Text style={styles.text}>Delete</Text>
+        </Animated.View>
+      </TapGestureHandler>
       <PanGestureHandler
         simultaneousHandlers={simultaneousHandlers}
         {...{ onGestureEvent }}
@@ -118,18 +127,27 @@ const styles = StyleSheet.create({
   rowContainer: {
     width: "100%",
     alignItems: "center",
-    // marginVertical: StyleGuide.spacing,
   },
   iconContainer: {
     height: LIST_ITEM_HEIGHT,
     width: LIST_ITEM_HEIGHT,
     position: "absolute",
+    top: 5,
     right: 0,
     alignItems: "center",
     justifyContent: "center",
     marginHorizontal: StyleGuide.spacing * 2.2,
   },
-
+  pressable: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  text: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#ff1a1a",
+  },
   task: {
     flexDirection: "row",
     alignItems: "center",
