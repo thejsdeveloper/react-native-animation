@@ -6,10 +6,17 @@ import { RectButton } from "react-native-gesture-handler";
 import StyleGuide from "../../components/StyleGuide";
 import { Routes } from "../../navigation/Routes";
 
-const screens = [
+const screens: {
+  screen: keyof Routes;
+  title: string;
+}[] = [
   {
     screen: "PanGesture",
     title: "💳 PanGesture",
+  },
+  {
+    screen: "SwipeToDelete",
+    title: "🌊 Swipe To Delete",
   },
 ];
 
@@ -23,7 +30,7 @@ const HomeScreen = () => {
         <RectButton
           key={scrn.screen}
           onPress={() => {
-            navigate(scrn.screen as keyof Routes);
+            navigate(scrn.screen);
           }}
         >
           <View style={styles.thumbnail}>
@@ -45,7 +52,6 @@ const styles = StyleSheet.create({
     paddingBottom: 32,
   },
   thumbnail: {
-    marginTop: StyleGuide.spacing,
     backgroundColor: "white",
     padding: StyleGuide.spacing * 2,
     borderBottomWidth: StyleSheet.hairlineWidth,

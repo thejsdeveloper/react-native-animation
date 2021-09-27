@@ -1,5 +1,6 @@
 const StyleGuide = {
   spacing: 8,
+  shadow: 4,
   palette: {
     primary: "#3884ff",
     secondary: "#FF6584",
