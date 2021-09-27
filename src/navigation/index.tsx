@@ -85,7 +85,7 @@ export default function Navigation({
           name="SwipeToDelete"
           component={DemoSwipeToDelete}
           options={{
-            title: "Swipe To Delete",
+            title: "Task List",
           }}
         />
       </Stack.Navigator>
