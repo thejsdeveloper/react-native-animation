@@ -18,6 +18,10 @@ const screens: {
     screen: "SwipeToDelete",
     title: "🌊 Swipe To Delete",
   },
+  {
+    screen: "SwipeToDeleteWithUserFeedback",
+    title: "🌊 Swipe To Delete with User feedback",
+  },
 ];
 
 const HomeScreen = () => {

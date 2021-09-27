@@ -16,6 +16,7 @@ import { Routes } from "./Routes";
 import PanGesture from "../screens/PanGesture";
 import HomeScreen from "../screens/HomeScreen";
 import DemoSwipeToDelete from "../screens/SwipeToDelete";
+import DemoSwipeToDeleteWithUserFeedback from "../screens/UserFeedbackSwipeToDelete";
 
 const Stack = createNativeStackNavigator<Routes>();
 
@@ -84,6 +85,14 @@ export default function Navigation({
         <Stack.Screen
           name="SwipeToDelete"
           component={DemoSwipeToDelete}
+          options={{
+            title: "Task List",
+          }}
+        />
+
+        <Stack.Screen
+          name="SwipeToDeleteWithUserFeedback"
+          component={DemoSwipeToDeleteWithUserFeedback}
           options={{
             title: "Task List",
           }}
