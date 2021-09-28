@@ -85,18 +85,6 @@ const UserFeedbackSwipeRow = ({
     };
   });
 
-  const handleTapGesture = useAnimatedGestureHandler<
-    GestureEvent<TapGestureHandlerEventPayload>
-  >({
-    onEnd: () => {
-      taskHeight.value = withTiming(0);
-      taskMarginVertical.value = withTiming(0);
-      taskOpacity.value = withTiming(0, undefined, (finished) => {
-        runOnJS(onDismiss)(task);
-      });
-    },
-  });
-
   const handleOnActivate = () => {
     taskHeight.value = withTiming(0);
     taskMarginVertical.value = withTiming(0);
