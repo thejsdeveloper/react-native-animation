@@ -97,9 +97,17 @@ const UserFeedbackSwipeRow = ({
     },
   });
 
+  const handleOnActivate = () => {
+    taskHeight.value = withTiming(0);
+    taskMarginVertical.value = withTiming(0);
+    taskOpacity.value = withTiming(0, undefined, (finished) => {
+      runOnJS(onDismiss)(task);
+    });
+  };
+
   return (
     <Animated.View style={[styles.rowContainer, rRowContainerStyle]}>
-      <TapGestureHandler onGestureEvent={handleTapGesture}>
+      <TapGestureHandler onActivated={handleOnActivate}>
         <Animated.View style={[styles.iconContainer, rIconContainerStyle]}>
           <FontAwesome5
             name={"trash-alt"}

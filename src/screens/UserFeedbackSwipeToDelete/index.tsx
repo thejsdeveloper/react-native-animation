@@ -51,7 +51,6 @@ const DemoSwipeToDeleteWithUserFeedback = () => {
   const onDismiss = React.useCallback((task: Task) => {
     setTasks((storedTask) => {
       const value = storedTask.filter((t) => t.id !== task.id);
-      console.log("Length ->", value.length);
       return value;
     });
   }, []);
