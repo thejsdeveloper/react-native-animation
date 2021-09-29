@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { TapGestureHandler } from "react-native-gesture-handler";
 import Animated, {
+  runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withDelay,
@@ -27,12 +28,23 @@ const { width: SIZE } = Dimensions.get("window");
 
 const TapEnabledImage = () => {
   const dobleTapRef = React.useRef<TapGestureHandler | null>(null);
+  const [likes, setLikes] = React.useState<number>(0);
+  const [isLiked, setIsLiked] = React.useState<boolean>(false);
+  const [loved, setLoved] = React.useState<number>(0);
+  const [isLoved, setIsLoved] = React.useState<boolean>(false);
 
   const heartScale = useSharedValue(0);
   const likeScale = useSharedValue(0);
 
+  const inscreaseLoved = () => {
+    if (!isLoved) {
+      setIsLoved(true);
+      setLoved((val) => val + 1);
+    }
+  };
   const doubleTapHandler = () => {
     heartScale.value = withSpring(1, undefined, (finished) => {
+      runOnJS(inscreaseLoved)();
       if (finished) {
         heartScale.value = withDelay(500, withSpring(0));
       }
@@ -48,9 +60,16 @@ const TapEnabledImage = () => {
       ],
     };
   });
+  const increaseLikes = () => {
+    if (!isLiked) {
+      setIsLiked(true);
+      setLikes((value) => value + 1);
+    }
+  };
 
   const singleTapHandler = () => {
     likeScale.value = withSpring(1, undefined, (finished) => {
+      runOnJS(increaseLikes)();
       if (finished) {
         likeScale.value = withDelay(500, withSpring(0));
       }
@@ -88,8 +107,32 @@ const TapEnabledImage = () => {
             </Animated.View>
           </ImageBackground>
           <View style={styles.iconContainer}>
-            <FontAwesome name="thumbs-o-up" size={24} color="black" />
-            <Text style={styles.text}>123</Text>
+            <FontAwesome
+              name={`thumbs${isLiked ? "" : "-o"}-up`}
+              size={24}
+              color={isLiked ? "royalblue" : "black"}
+            />
+            <Text
+              style={{
+                ...styles.text,
+                ...{ color: isLiked ? "royalblue" : "black" },
+              }}
+            >
+              {likes}
+            </Text>
+            <FontAwesome
+              name={`heart${isLoved ? "" : "-o"}`}
+              size={24}
+              color={isLoved ? "red" : "black"}
+            />
+            <Text
+              style={{
+                ...styles.text,
+                ...{ color: isLoved ? "red" : "black" },
+              }}
+            >
+              {loved}
+            </Text>
           </View>
         </Animated.View>
       </TapGestureHandler>
