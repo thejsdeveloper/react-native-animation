@@ -1,4 +1,3 @@
-import { FontAwesome } from "@expo/vector-icons";
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import Animated, {
@@ -7,37 +6,15 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import StyleGuide from "../../components/StyleGuide";
+import FAIcon, { IconName, ICON_SIZE } from "./FAIcon";
 
-const ICON_SIZE = 24;
-type IconName = "thumb" | "heart";
-type IconType = "solid" | "hollow";
-
-const getIcon = (name: IconName, size: number, type: IconType = "hollow") => {
-  switch (name) {
-    case "thumb":
-      return (
-        <FontAwesome
-          name={`thumbs${type === "hollow" ? "-o" : ""}-up`}
-          size={size}
-          color="black"
-        />
-      );
-    case "heart":
-      return (
-        <FontAwesome
-          name={`heart${type === "hollow" ? "-o" : ""}`}
-          size={size}
-          color="black"
-        />
-      );
-  }
-};
 type IconProps = {
   iconName: IconName;
   iconText: string | number;
   isActive: boolean;
   onPress: () => void;
 };
+
 const Icon = ({ iconName, iconText, isActive, onPress }: IconProps) => {
   const translateY = useDerivedValue(() => {
     return isActive ? -ICON_SIZE : 0;
@@ -70,14 +47,14 @@ const Icon = ({ iconName, iconText, isActive, onPress }: IconProps) => {
   });
 
   return (
-    <Pressable {...{ onPress }}>
+    <Pressable onPress={onPress}>
       <View style={styles.container}>
         <Animated.View style={[styles.iconContainer, rHollowStyle]}>
-          {getIcon(iconName, ICON_SIZE)}
+          <FAIcon name={iconName} />
           <Text style={styles.text}>{iconText}</Text>
         </Animated.View>
         <Animated.View style={[styles.iconContainer, rSolidStyle]}>
-          {getIcon(iconName, ICON_SIZE, "solid")}
+          <FAIcon name={iconName} type="solid" />
           <Text style={styles.text}>{iconText}</Text>
         </Animated.View>
       </View>
