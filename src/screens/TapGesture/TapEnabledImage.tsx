@@ -14,7 +14,6 @@ import Animated, {
   useSharedValue,
   withDelay,
   withSpring,
-  withTiming,
 } from "react-native-reanimated";
 import { clamp } from "react-native-redash";
 import StyleGuide from "../../components/StyleGuide";
@@ -22,34 +21,58 @@ import Icon from "./Icon";
 
 const { width: SIZE } = Dimensions.get("window");
 export const ICON_SIZE = 24;
-/* 
-  <FontAwesome name="thumbs-o-up" size={24} color="black" />
-  <FontAwesome name="thumbs-up" size={24} color="black" />
-  <FontAwesome name="heart" size={24} color="black" />
-  <FontAwesome name="heart" size={24} color="black" />
-  */
+
+type ActionType = "INCREASE_LIKE" | "INCREASE_LOVE";
+
+type State = {
+  isLiked: boolean;
+  likes: number;
+  isLoved: boolean;
+  loved: number;
+};
+const reducer = (state: State, action: { type: ActionType }) => {
+  switch (action.type) {
+    case "INCREASE_LIKE": {
+      return {
+        ...state,
+        likes: state.isLiked ? state.likes : state.likes + 1,
+        isLiked: true,
+      };
+    }
+    case "INCREASE_LOVE": {
+      return {
+        ...state,
+        loved: state.isLoved ? state.loved : state.loved + 1,
+        isLoved: true,
+      };
+    }
+    default:
+      return state;
+  }
+};
+
+const INITIAL_STATE: State = {
+  isLiked: false,
+  likes: 0,
+  isLoved: false,
+  loved: 0,
+};
 
 const TapEnabledImage = () => {
   const dobleTapRef = React.useRef<TapGestureHandler | null>(null);
-  const [likes, setLikes] = React.useState<number>(0);
-  const [isLiked, setIsLiked] = React.useState<boolean>(false);
-  const [loved, setLoved] = React.useState<number>(0);
-  const [isLoved, setIsLoved] = React.useState<boolean>(false);
+
+  const [{ likes, isLiked, loved, isLoved }, dispatch] = React.useReducer(
+    reducer,
+    INITIAL_STATE
+  );
 
   const heartScale = useSharedValue(0);
   const likeScale = useSharedValue(0);
   const likeTranslateY = useSharedValue(0);
-  const heartTranslateY = useSharedValue(0);
 
-  const inscreaseLoved = () => {
-    if (!isLoved) {
-      setIsLoved(true);
-      setLoved((val) => val + 1);
-    }
-  };
   const doubleTapHandler = useCallback(() => {
     heartScale.value = withSpring(1, undefined, (finished) => {
-      runOnJS(inscreaseLoved)();
+      runOnJS(dispatch)({ type: "INCREASE_LOVE" });
       if (finished) {
         heartScale.value = withDelay(500, withSpring(0));
       }
@@ -65,16 +88,10 @@ const TapEnabledImage = () => {
       ],
     };
   });
-  const increaseLikes = () => {
-    if (!isLiked) {
-      setIsLiked(true);
-      setLikes((value) => value + 1);
-    }
-  };
 
   const singleTapHandler = useCallback(() => {
     likeScale.value = withSpring(1, undefined, (finished) => {
-      runOnJS(increaseLikes)();
+      runOnJS(dispatch)({ type: "INCREASE_LIKE" });
       if (finished) {
         likeScale.value = withDelay(500, withSpring(0));
       }
