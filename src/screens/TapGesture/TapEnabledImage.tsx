@@ -18,67 +18,10 @@ import Animated, {
 import { clamp } from "react-native-redash";
 import StyleGuide from "../../components/StyleGuide";
 import Icon from "./Icon";
+import { INITIAL_STATE, reducer } from "./state";
 
 const { width: SIZE } = Dimensions.get("window");
 export const ICON_SIZE = 24;
-
-type ActionType =
-  | "INCREASE_LIKE"
-  | "DECREASE_LIKE"
-  | "INCREASE_LOVE"
-  | "DECREASE_LOVE"
-  | "RESET";
-
-type State = {
-  isLiked: boolean;
-  likes: number;
-  isLoved: boolean;
-  loved: number;
-};
-const reducer = (state: State, action: { type: ActionType }) => {
-  switch (action.type) {
-    case "INCREASE_LIKE": {
-      return {
-        ...state,
-        likes: state.isLiked ? state.likes : state.likes + 1,
-        isLiked: true,
-      };
-    }
-    case "DECREASE_LIKE": {
-      return {
-        ...state,
-        likes: state.likes - 1,
-        isLiked: false,
-      };
-    }
-    case "INCREASE_LOVE": {
-      return {
-        ...state,
-        loved: state.isLoved ? state.loved : state.loved + 1,
-        isLoved: true,
-      };
-    }
-    case "DECREASE_LOVE": {
-      return {
-        ...state,
-        loved: state.loved - 1,
-        isLoved: false,
-      };
-    }
-    case "RESET": {
-      return INITIAL_STATE;
-    }
-    default:
-      return state;
-  }
-};
-
-const INITIAL_STATE: State = {
-  isLiked: false,
-  likes: 0,
-  isLoved: false,
-  loved: 0,
-};
 
 const TapEnabledImage = () => {
   const dobleTapRef = React.useRef<TapGestureHandler | null>(null);
@@ -202,7 +145,7 @@ const styles = StyleSheet.create({
   iconContainer: {
     flexDirection: "row",
     alignItems: "center",
-    margin: StyleGuide.spacing,
+    margin: StyleGuide.spacing * 2,
   },
   text: {
     paddingHorizontal: StyleGuide.spacing,
