@@ -4,7 +4,6 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useDerivedValue,
-  useSharedValue,
   withTiming,
 } from "react-native-reanimated";
 import StyleGuide from "../../components/StyleGuide";

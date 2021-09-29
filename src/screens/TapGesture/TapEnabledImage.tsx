@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import { TapGestureHandler } from "react-native-gesture-handler";
 import Animated, {
-  runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withDelay,
