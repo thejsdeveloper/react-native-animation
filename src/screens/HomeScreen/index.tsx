@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   thumbnail: {
     backgroundColor: "white",
     padding: StyleGuide.spacing * 2,
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: 1,
     borderColor: StyleGuide.palette.background,
   },
   title: {
