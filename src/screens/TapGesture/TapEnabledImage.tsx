@@ -5,7 +5,6 @@ import {
   ImageBackground,
   Pressable,
   StyleSheet,
-  Text,
   View,
 } from "react-native";
 import { TapGestureHandler } from "react-native-gesture-handler";
@@ -22,7 +21,6 @@ import Icon from "./Icon";
 import { INITIAL_STATE, reducer } from "./state";
 
 const { width: SIZE } = Dimensions.get("window");
-export const ICON_SIZE = 24;
 
 const TapEnabledImage = () => {
   const dobleTapRef = React.useRef<TapGestureHandler | null>(null);
