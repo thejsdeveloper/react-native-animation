@@ -13,6 +13,7 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withDelay,
+  withSequence,
   withSpring,
 } from "react-native-reanimated";
 import { clamp } from "react-native-redash";
@@ -33,15 +34,13 @@ const TapEnabledImage = () => {
 
   const heartScale = useSharedValue(0);
   const likeScale = useSharedValue(0);
-  const likeTranslateY = useSharedValue(0);
 
   const doubleTapHandler = useCallback(() => {
     dispatch({ type: "INCREASE_LOVE" });
-    heartScale.value = withSpring(1, undefined, (finished) => {
-      if (finished) {
-        heartScale.value = withDelay(500, withSpring(0));
-      }
-    });
+    heartScale.value = withSequence(
+      withSpring(1),
+      withDelay(300, withSpring(0))
+    );
   }, []);
 
   const rHeartStyle = useAnimatedStyle(() => {
@@ -56,13 +55,11 @@ const TapEnabledImage = () => {
 
   const singleTapHandler = useCallback(() => {
     dispatch({ type: "INCREASE_LIKE" });
-    likeScale.value = withSpring(1, undefined, (finished) => {
-      if (finished) {
-        likeScale.value = withDelay(500, withSpring(0));
-      }
-    });
 
-    likeTranslateY.value = -ICON_SIZE;
+    likeScale.value = withSequence(
+      withSpring(1),
+      withDelay(300, withSpring(0))
+    );
   }, []);
 
   const rLikeStyle = useAnimatedStyle(() => {
