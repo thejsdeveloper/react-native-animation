@@ -1,8 +1,9 @@
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import React, { useCallback } from "react";
 import {
   Dimensions,
   ImageBackground,
+  Pressable,
   StyleSheet,
   Text,
   View,
@@ -22,7 +23,12 @@ import Icon from "./Icon";
 const { width: SIZE } = Dimensions.get("window");
 export const ICON_SIZE = 24;
 
-type ActionType = "INCREASE_LIKE" | "INCREASE_LOVE";
+type ActionType =
+  | "INCREASE_LIKE"
+  | "DECREASE_LIKE"
+  | "INCREASE_LOVE"
+  | "DECREASE_LOVE"
+  | "RESET";
 
 type State = {
   isLiked: boolean;
@@ -39,12 +45,29 @@ const reducer = (state: State, action: { type: ActionType }) => {
         isLiked: true,
       };
     }
+    case "DECREASE_LIKE": {
+      return {
+        ...state,
+        likes: state.likes - 1,
+        isLiked: false,
+      };
+    }
     case "INCREASE_LOVE": {
       return {
         ...state,
         loved: state.isLoved ? state.loved : state.loved + 1,
         isLoved: true,
       };
+    }
+    case "DECREASE_LOVE": {
+      return {
+        ...state,
+        loved: state.loved - 1,
+        isLoved: false,
+      };
+    }
+    case "RESET": {
+      return INITIAL_STATE;
     }
     default:
       return state;
@@ -71,8 +94,8 @@ const TapEnabledImage = () => {
   const likeTranslateY = useSharedValue(0);
 
   const doubleTapHandler = useCallback(() => {
+    dispatch({ type: "INCREASE_LOVE" });
     heartScale.value = withSpring(1, undefined, (finished) => {
-      runOnJS(dispatch)({ type: "INCREASE_LOVE" });
       if (finished) {
         heartScale.value = withDelay(500, withSpring(0));
       }
@@ -90,8 +113,8 @@ const TapEnabledImage = () => {
   });
 
   const singleTapHandler = useCallback(() => {
+    dispatch({ type: "INCREASE_LIKE" });
     likeScale.value = withSpring(1, undefined, (finished) => {
-      runOnJS(dispatch)({ type: "INCREASE_LIKE" });
       if (finished) {
         likeScale.value = withDelay(500, withSpring(0));
       }
@@ -110,8 +133,27 @@ const TapEnabledImage = () => {
     };
   });
 
+  const onLikeIconPress = () => {
+    if (isLiked) {
+      dispatch({ type: "DECREASE_LIKE" });
+    } else {
+      dispatch({ type: "INCREASE_LIKE" });
+    }
+  };
+
+  const onLoveIconPress = () => {
+    if (isLoved) {
+      dispatch({ type: "DECREASE_LOVE" });
+    } else {
+      dispatch({ type: "INCREASE_LOVE" });
+    }
+  };
+
   return (
     <View style={[styles.container]}>
+      <Pressable onPress={() => dispatch({ type: "RESET" })}>
+        <Ionicons name="ios-reload-circle-outline" size={40} color="black" />
+      </Pressable>
       <TapGestureHandler onActivated={singleTapHandler} waitFor={dobleTapRef}>
         <TapGestureHandler
           onActivated={doubleTapHandler}
@@ -135,8 +177,18 @@ const TapEnabledImage = () => {
         </TapGestureHandler>
       </TapGestureHandler>
       <View style={styles.iconContainer}>
-        <Icon iconName="thumb" iconText={likes} isActive={isLiked} />
-        <Icon iconName="heart" iconText={loved} isActive={isLoved} />
+        <Icon
+          iconName="thumb"
+          iconText={likes}
+          isActive={isLiked}
+          onPress={onLikeIconPress}
+        />
+        <Icon
+          iconName="heart"
+          iconText={loved}
+          isActive={isLoved}
+          onPress={onLoveIconPress}
+        />
       </View>
     </View>
   );

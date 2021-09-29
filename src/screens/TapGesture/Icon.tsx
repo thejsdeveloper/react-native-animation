@@ -1,6 +1,6 @@
 import { FontAwesome } from "@expo/vector-icons";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useDerivedValue,
@@ -37,8 +37,9 @@ type IconProps = {
   iconName: IconName;
   iconText: string | number;
   isActive: boolean;
+  onPress: () => void;
 };
-const Icon = ({ iconName, iconText, isActive }: IconProps) => {
+const Icon = ({ iconName, iconText, isActive, onPress }: IconProps) => {
   const translateY = useDerivedValue(() => {
     return isActive ? -ICON_SIZE : 0;
   }, [isActive]);
@@ -70,16 +71,18 @@ const Icon = ({ iconName, iconText, isActive }: IconProps) => {
   });
 
   return (
-    <View style={styles.container}>
-      <Animated.View style={[styles.iconContainer, rHollowStyle]}>
-        {getIcon(iconName, ICON_SIZE)}
-        <Text style={styles.text}>{iconText}</Text>
-      </Animated.View>
-      <Animated.View style={[styles.iconContainer, rSolidStyle]}>
-        {getIcon(iconName, ICON_SIZE, "solid")}
-        <Text style={styles.text}>{iconText}</Text>
-      </Animated.View>
-    </View>
+    <Pressable {...{ onPress }}>
+      <View style={styles.container}>
+        <Animated.View style={[styles.iconContainer, rHollowStyle]}>
+          {getIcon(iconName, ICON_SIZE)}
+          <Text style={styles.text}>{iconText}</Text>
+        </Animated.View>
+        <Animated.View style={[styles.iconContainer, rSolidStyle]}>
+          {getIcon(iconName, ICON_SIZE, "solid")}
+          <Text style={styles.text}>{iconText}</Text>
+        </Animated.View>
+      </View>
+    </Pressable>
   );
 };
 
@@ -88,6 +91,7 @@ export default React.memo(Icon);
 const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
+    width: 50,
   },
   iconContainer: {
     flexDirection: "row",
