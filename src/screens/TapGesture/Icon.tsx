@@ -14,7 +14,6 @@ type IconName = "thumb" | "heart";
 type IconType = "solid" | "hollow";
 
 const getIcon = (name: IconName, size: number, type: IconType = "hollow") => {
-  console.log("getIcon");
   switch (name) {
     case "thumb":
       return (
@@ -40,7 +39,6 @@ type IconProps = {
   isActive: boolean;
 };
 const Icon = ({ iconName, iconText, isActive }: IconProps) => {
-  console.log("----ICON----", iconName);
   const translateY = useDerivedValue(() => {
     return isActive ? -ICON_SIZE : 0;
   }, [isActive]);
@@ -71,21 +69,13 @@ const Icon = ({ iconName, iconText, isActive }: IconProps) => {
     };
   });
 
-  // const icon = React.useCallback(
-  //   (name: IconName, size: number, type: IconType = "hollow") => {
-  //     console.log("-----Callback-----");
-  //     return getIcon(name, size, type);
-  //   },
-  //   []
-  // );
-
   return (
     <View style={styles.container}>
-      <Animated.View style={[styles.iconContainer, styles.top, rHollowStyle]}>
+      <Animated.View style={[styles.iconContainer, rHollowStyle]}>
         {getIcon(iconName, ICON_SIZE)}
         <Text style={styles.text}>{iconText}</Text>
       </Animated.View>
-      <Animated.View style={[styles.iconContainer, styles.bottom, rSolidStyle]}>
+      <Animated.View style={[styles.iconContainer, rSolidStyle]}>
         {getIcon(iconName, ICON_SIZE, "solid")}
         <Text style={styles.text}>{iconText}</Text>
       </Animated.View>
@@ -102,12 +92,6 @@ const styles = StyleSheet.create({
   iconContainer: {
     flexDirection: "row",
     alignItems: "center",
-  },
-  top: {
-    // backgroundColor: "red",
-  },
-  bottom: {
-    // backgroundColor: "green",
   },
   text: {
     paddingHorizontal: StyleGuide.spacing,
