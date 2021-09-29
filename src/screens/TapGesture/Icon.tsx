@@ -14,7 +14,7 @@ type IconName = "thumb" | "heart";
 type IconType = "solid" | "hollow";
 
 const getIcon = (name: IconName, size: number, type: IconType = "hollow") => {
-  // console.log("getIcon");
+  console.log("getIcon");
   switch (name) {
     case "thumb":
       return (
@@ -40,7 +40,7 @@ type IconProps = {
   isActive: boolean;
 };
 const Icon = ({ iconName, iconText, isActive }: IconProps) => {
-  // console.log("ICON ");
+  console.log("----ICON----", iconName);
   const translateY = useDerivedValue(() => {
     return isActive ? -ICON_SIZE : 0;
   }, [isActive]);
@@ -93,7 +93,7 @@ const Icon = ({ iconName, iconText, isActive }: IconProps) => {
   );
 };
 
-export default Icon;
+export default React.memo(Icon);
 
 const styles = StyleSheet.create({
   container: {
