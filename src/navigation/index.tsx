@@ -17,6 +17,7 @@ import PanGesture from "../screens/PanGesture";
 import HomeScreen from "../screens/HomeScreen";
 import DemoSwipeToDelete from "../screens/SwipeToDelete";
 import DemoSwipeToDeleteWithUserFeedback from "../screens/UserFeedbackSwipeToDelete";
+import TapToLike from "../screens/TapGesture";
 
 const Stack = createNativeStackNavigator<Routes>();
 
@@ -95,6 +96,14 @@ export default function Navigation({
           component={DemoSwipeToDeleteWithUserFeedback}
           options={{
             title: "Task List",
+          }}
+        />
+
+        <Stack.Screen
+          name="TapGesture"
+          component={TapToLike}
+          options={{
+            title: "♥️ ❌ 👍🏽",
           }}
         />
       </Stack.Navigator>

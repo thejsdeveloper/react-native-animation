@@ -22,6 +22,10 @@ const screens: {
     screen: "SwipeToDeleteWithUserFeedback",
     title: "🌊 Swipe To Delete with User feedback",
   },
+  {
+    screen: "TapGesture",
+    title: "♥️ 👍🏽 Tap to like and love",
+  },
 ];
 
 const HomeScreen = () => {
