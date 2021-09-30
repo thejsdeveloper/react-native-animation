@@ -8,7 +8,13 @@ const StyleGuide = {
     backgroundPrimary: "#d5e5ff", // === rgba(primary, 0.1)
     background: "#f2f2f2",
     border: "#f2f2f2",
+    telegramBlue: "#0088cc",
+    white: "#fff",
+    darkgrey: "#22353c",
+    darkerGrey: "#19272c",
+    offWhite: "#E6E9EF",
   },
+
   typography: {
     body: {
       fontSize: 17,
@@ -51,3 +57,25 @@ const StyleGuide = {
 };
 
 export default StyleGuide;
+
+export type Palette = {
+  primary: string;
+  secondary: string;
+  tertiary: string;
+  muted: string;
+};
+export type Theme = "dark" | "light";
+export const theme: Record<Theme, Palette> = {
+  dark: {
+    primary: StyleGuide.palette.telegramBlue,
+    secondary: StyleGuide.palette.white,
+    tertiary: StyleGuide.palette.darkgrey,
+    muted: StyleGuide.palette.darkerGrey,
+  },
+  light: {
+    primary: StyleGuide.palette.telegramBlue,
+    secondary: StyleGuide.palette.darkgrey,
+    tertiary: StyleGuide.palette.white,
+    muted: StyleGuide.palette.offWhite,
+  },
+};
