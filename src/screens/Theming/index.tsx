@@ -12,28 +12,12 @@ import StyleGuide, { Theme, theme } from "../../components/StyleGuide";
 import MiniChat from "./MiniChat";
 const AnimatedSafeArea = Animated.createAnimatedComponent(SafeAreaView);
 
-const SWITCH_TRACK_COLOR = {
-  true: theme.light.muted,
-  false: theme.dark.muted,
-};
-
 const ThemeScreen = () => {
   const [chatTheme, setChatTheme] = useState<Theme>("dark");
 
   const progress = useDerivedValue(() => {
     return chatTheme === "dark" ? withTiming(1) : withTiming(0);
   }, [chatTheme]);
-
-  const rStyle = useAnimatedStyle(() => {
-    const backgroundColor = interpolateColor(
-      progress.value,
-      [0, 1],
-      [theme.light.tertiary, theme.dark.tertiary]
-    );
-    return {
-      backgroundColor,
-    };
-  });
 
   const rTopStyle = useAnimatedStyle(() => {
     const backgroundColor = interpolateColor(
@@ -66,8 +50,15 @@ const ThemeScreen = () => {
           colors={["#667db6", "#0082c8", "#0082c8", "#667db6"]}
           style={[styles.gradient]}
         >
-          <MiniChat onPress={handleThemeChange} />
-          <MiniChat flavour="dark" onPress={handleThemeChange} />
+          <MiniChat
+            onPress={handleThemeChange}
+            active={chatTheme === "light"}
+          />
+          <MiniChat
+            flavour="dark"
+            onPress={handleThemeChange}
+            active={chatTheme === "dark"}
+          />
         </LinearGradient>
       </View>
     </>
@@ -93,7 +84,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "center",
     position: "absolute",
     left: 0,
     right: 0,

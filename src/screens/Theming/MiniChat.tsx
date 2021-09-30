@@ -1,34 +1,90 @@
 import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
+import Animated, {
+  interpolateColor,
+  useAnimatedStyle,
+  useDerivedValue,
+  withTiming,
+} from "react-native-reanimated";
 import StyleGuide, { Theme, theme } from "../../components/StyleGuide";
 
 type MiniChatProps = {
   flavour?: Theme;
   onPress: (theme: Theme) => void;
+  active: boolean;
 };
 
-const MiniChat = ({ flavour = "light", onPress }: MiniChatProps) => {
+const MiniChat = ({ flavour = "light", onPress, active }: MiniChatProps) => {
+  const circleBgColor =
+    flavour === "dark" ? theme.light.tertiary : theme.light.primary;
+
+  const circleOrderColor =
+    flavour === "dark" ? theme.light.tertiary : theme.light.primary;
+
   const chatFlvouredTextStyle = {
     backgroundColor: theme[flavour].tertiary,
   };
-  const circleColor = {
-    backgroundColor:
-      flavour === "dark" ? theme.light.tertiary : theme.light.primary,
-  };
+
+  const scale = useDerivedValue(() => {
+    return active ? withTiming(1.2) : withTiming(1);
+  }, [active]);
+
+  const rChatStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          scale: scale.value,
+        },
+      ],
+    };
+  });
+
+  const innerCircleScale = useDerivedValue(() => {
+    return active ? withTiming(0.6) : withTiming(1);
+  }, [active]);
+
+  const rInnerCircleStyle = useAnimatedStyle(() => {
+    const backgroundColor = interpolateColor(
+      innerCircleScale.value,
+      [0.6, 1],
+      [circleBgColor, "transparent"]
+    );
+
+    return {
+      transform: [
+        {
+          scale: innerCircleScale.value,
+        },
+      ],
+      backgroundColor,
+    };
+  });
+
+  const rOutCircleColor = useAnimatedStyle(() => {
+    const borderColor = interpolateColor(
+      innerCircleScale.value,
+      [0.6, 1],
+      [circleOrderColor, "lightgrey"]
+    );
+    return {
+      borderColor,
+    };
+  });
+
   return (
     <Pressable onPress={() => onPress(flavour)}>
-      <View style={[styles.chat, chatFlvouredTextStyle]}>
+      <Animated.View style={[styles.chat, chatFlvouredTextStyle, rChatStyle]}>
         <View style={styles.chatTop}>
           <View style={[styles.chatText, styles.senderText]} />
           <View style={[styles.chatText, styles.ownerText]} />
           <View style={[styles.chatText, styles.senderText]} />
         </View>
         <View style={styles.chatBottom}>
-          <View style={[styles.circle, styles.lightCircle]}>
-            <View style={[styles.innerCircle, circleColor]} />
-          </View>
+          <Animated.View style={[styles.circle, rOutCircleColor]}>
+            <Animated.View style={[styles.innerCircle, rInnerCircleStyle]} />
+          </Animated.View>
         </View>
-      </View>
+      </Animated.View>
     </Pressable>
   );
 };
@@ -41,6 +97,7 @@ const styles = StyleSheet.create({
     borderRadius: StyleGuide.spacing,
     width: 100,
     height: 150,
+    marginRight: 50,
     shadowOffset: {
       width: 0,
       height: 20,
@@ -89,16 +146,14 @@ const styles = StyleSheet.create({
     width: SIZE,
     height: SIZE,
     borderRadius: 999,
-    borderWidth: 3,
+    borderWidth: 2.5,
     alignItems: "center",
     justifyContent: "center",
   },
-  lightCircle: {
-    borderColor: "lightgrey",
-  },
+
   innerCircle: {
-    width: SIZE * 0.7,
-    height: SIZE * 0.7,
+    width: SIZE,
+    height: SIZE,
     borderRadius: 999,
   },
 });
