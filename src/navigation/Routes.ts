@@ -4,6 +4,7 @@ export type Routes = {
   SwipeToDelete: undefined;
   SwipeToDeleteWithUserFeedback: undefined;
   TapGesture: undefined;
+  Theming: undefined;
   PanGesture: undefined;
   Animations: undefined;
   CircularSlider: undefined;

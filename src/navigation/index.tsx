@@ -18,6 +18,7 @@ import HomeScreen from "../screens/HomeScreen";
 import DemoSwipeToDelete from "../screens/SwipeToDelete";
 import DemoSwipeToDeleteWithUserFeedback from "../screens/UserFeedbackSwipeToDelete";
 import TapToLike from "../screens/TapGesture";
+import ThemeScreen from "../screens/Theming";
 
 const Stack = createNativeStackNavigator<Routes>();
 
@@ -104,6 +105,15 @@ export default function Navigation({
           component={TapToLike}
           options={{
             title: "♥️ ❌ 👍🏽",
+          }}
+        />
+
+        <Stack.Screen
+          name="Theming"
+          component={ThemeScreen}
+          options={{
+            title: "Chat Setting",
+            headerShown: false,
           }}
         />
       </Stack.Navigator>

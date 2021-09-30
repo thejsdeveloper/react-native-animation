@@ -26,6 +26,10 @@ const screens: {
     screen: "TapGesture",
     title: "♥️ 👍🏽 Tap to like and love",
   },
+  {
+    screen: "Theming",
+    title: "💅🏽 Change Theme",
+  },
 ];
 
 const HomeScreen = () => {
