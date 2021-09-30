@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, Switch, Dimensions } from "react-native";
-import Animated from "react-native-reanimated";
+import Animated, {
+  interpolateColor,
+  useAnimatedStyle,
+  useDerivedValue,
+  withTiming,
+} from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import StyleGuide, { Theme, theme } from "../../components/StyleGuide";
 const AnimatedSafeArea = Animated.createAnimatedComponent(SafeAreaView);
@@ -12,13 +17,49 @@ const SWITCH_TRACK_COLOR = {
 
 const ThemeScreen = () => {
   const [chatTheme, setChatTheme] = useState<Theme>("dark");
+
+  const progress = useDerivedValue(() => {
+    return chatTheme === "dark" ? withTiming(1) : withTiming(0);
+  }, [chatTheme]);
+
+  const rStyle = useAnimatedStyle(() => {
+    const backgroundColor = interpolateColor(
+      progress.value,
+      [0, 1],
+      [theme.light.tertiary, theme.dark.tertiary]
+    );
+    return {
+      backgroundColor,
+    };
+  });
+
+  const rTopStyle = useAnimatedStyle(() => {
+    const backgroundColor = interpolateColor(
+      progress.value,
+      [0, 1],
+      [theme.light.tertiary, theme.dark.tertiary]
+    );
+    return {
+      backgroundColor,
+    };
+  });
+
+  const rBottomStyle = useAnimatedStyle(() => {
+    const backgroundColor = interpolateColor(
+      progress.value,
+      [0, 1],
+      [theme.dark.tertiary, theme.light.tertiary]
+    );
+    return {
+      backgroundColor,
+    };
+  });
+
   return (
     <>
-      <View style={styles.top}>
-        <AnimatedSafeArea></AnimatedSafeArea>
-      </View>
-      <View style={styles.bottom}>
-        <View style={[styles.circle]}>
+      <Animated.View style={[styles.top, rTopStyle]}></Animated.View>
+      <Animated.View style={[styles.bottom]}>
+        <Animated.View style={[styles.circle, rStyle]}>
           <Switch
             value={chatTheme === "dark"}
             onValueChange={(toggled) => {
@@ -29,8 +70,8 @@ const ThemeScreen = () => {
               chatTheme === "light" ? theme.light.tertiary : theme.dark.tertiary
             }
           />
-        </View>
-      </View>
+        </Animated.View>
+      </Animated.View>
     </>
   );
 };
@@ -42,16 +83,16 @@ const SIZE = Dimensions.get("window").width * 0.5;
 const styles = StyleSheet.create({
   top: {
     flex: 2,
-    backgroundColor: theme.dark.tertiary,
+    // backgroundColor: theme.dark.tertiary,
     padding: StyleGuide.spacing,
   },
   bottom: {
     flex: 1,
     flexDirection: "row",
-    borderTopRightRadius: 10,
-    borderTopLeftRadius: 10,
-    marginTop: -10,
-    backgroundColor: "white",
+    borderTopRightRadius: 15,
+    borderTopLeftRadius: 15,
+    backgroundColor: theme.dark.primary,
+    marginTop: -15,
     alignItems: "center",
     justifyContent: "center",
   },
