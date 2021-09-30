@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { LinearGradient } from "expo-linear-gradient";
+import React, { useCallback, useState } from "react";
 import { StyleSheet, Text, View, Switch, Dimensions } from "react-native";
 import Animated, {
   interpolateColor,
@@ -8,6 +9,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import StyleGuide, { Theme, theme } from "../../components/StyleGuide";
+import MiniChat from "./MiniChat";
 const AnimatedSafeArea = Animated.createAnimatedComponent(SafeAreaView);
 
 const SWITCH_TRACK_COLOR = {
@@ -44,74 +46,58 @@ const ThemeScreen = () => {
     };
   });
 
-  const rBottomStyle = useAnimatedStyle(() => {
-    const backgroundColor = interpolateColor(
-      progress.value,
-      [0, 1],
-      [theme.dark.tertiary, theme.light.tertiary]
-    );
-    return {
-      backgroundColor,
-    };
-  });
+  const handleThemeChange = useCallback((theme: Theme) => {
+    setChatTheme(theme);
+  }, []);
 
   return (
     <>
       <Animated.View style={[styles.top, rTopStyle]}></Animated.View>
-      <Animated.View style={[styles.bottom]}>
-        <Animated.View style={[styles.circle, rStyle]}>
-          <Switch
-            value={chatTheme === "dark"}
-            onValueChange={(toggled) => {
-              setChatTheme(toggled ? "dark" : "light");
-            }}
-            trackColor={SWITCH_TRACK_COLOR}
-            thumbColor={
-              chatTheme === "light" ? theme.light.tertiary : theme.dark.tertiary
-            }
-          />
-        </Animated.View>
-      </Animated.View>
+      <View style={[styles.bottom]}>
+        <LinearGradient
+          start={{
+            x: 0,
+            y: 0,
+          }}
+          end={{
+            x: 1,
+            y: 0,
+          }}
+          colors={["#667db6", "#0082c8", "#0082c8", "#667db6"]}
+          style={[styles.gradient]}
+        >
+          <MiniChat onPress={handleThemeChange} />
+          <MiniChat flavour="dark" onPress={handleThemeChange} />
+        </LinearGradient>
+      </View>
     </>
   );
 };
 
 export default ThemeScreen;
 
-const SIZE = Dimensions.get("window").width * 0.5;
-
 const styles = StyleSheet.create({
   top: {
     flex: 2,
-    // backgroundColor: theme.dark.tertiary,
     padding: StyleGuide.spacing,
   },
   bottom: {
     flex: 1,
-    flexDirection: "row",
     borderTopRightRadius: 15,
     borderTopLeftRadius: 15,
     backgroundColor: theme.dark.primary,
     marginTop: -15,
-    alignItems: "center",
-    justifyContent: "center",
+    overflow: "hidden",
   },
-  circle: {
-    width: SIZE,
-    height: SIZE,
-    backgroundColor: theme.dark.tertiary,
-    borderRadius: 9999,
+  gradient: {
+    flex: 1,
+    flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
-    shadowOffset: {
-      width: 0,
-      height: 20,
-    },
-    shadowRadius: 10,
-    shadowOpacity: 0.1,
-    elevation: 8,
-  },
-  lightChat: {
-    backgroundColor: theme.light.muted,
+    justifyContent: "space-around",
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
   },
 });
