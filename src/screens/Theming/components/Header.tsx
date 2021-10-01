@@ -5,30 +5,11 @@ import Animated, {
   interpolateColor,
   useAnimatedStyle,
 } from "react-native-reanimated";
-import StyleGuide, { theme, Theme } from "../../../components/StyleGuide";
-import { useThemeProgress } from "./useProgress";
+import StyleGuide from "../../../components/StyleGuide";
 import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-type HeaderProps = {
-  chatTheme: Theme;
-};
-
-const Header = ({ chatTheme }: HeaderProps) => {
-  const progress = useThemeProgress(chatTheme);
-
-  const rHeaderStyle = useAnimatedStyle(() => {
-    const backgroundColor = interpolateColor(
-      progress.value,
-      [0, 1],
-      [theme.light.primary, theme.dark.muted]
-    );
-
-    return {
-      backgroundColor,
-    };
-  });
-
+const Header = () => {
   return (
     <SafeAreaView style={[styles.container]}>
       <LinearGradient

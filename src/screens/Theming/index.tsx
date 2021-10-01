@@ -35,8 +35,7 @@ const ThemeScreen = () => {
   return (
     <>
       <Animated.View style={[styles.top, rTopStyle]}>
-        <Header chatTheme={chatTheme} />
-
+        <Header />
         <Chat chatTheme={chatTheme} />
       </Animated.View>
       <View style={[styles.bottom]}>
