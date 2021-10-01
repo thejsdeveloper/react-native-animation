@@ -7,8 +7,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import StyleGuide, { Theme, theme } from "../../../components/StyleGuide";
-import Self from "./Self";
-import Sender from "./Sender";
+import Conversation from "./Conversation";
 
 type MiniChatProps = {
   flavour?: Theme;
@@ -77,21 +76,19 @@ const MiniChat = ({ flavour = "light", onPress, active }: MiniChatProps) => {
     <Pressable onPress={() => onPress(flavour)}>
       <Animated.View style={[styles.chat, chatFlvouredTextStyle, rChatStyle]}>
         <View style={styles.chatTop}>
-          <Sender
+          <Conversation
             fill={theme.light.muted}
             style={[styles.chatText, styles.senderText]}
           />
-          <Self
+          <Conversation
+            type="owner"
             fill={theme.light.primary}
             style={[styles.chatText, styles.ownerText]}
           />
-          <Sender
+          <Conversation
             fill={theme.light.muted}
             style={[styles.chatText, styles.senderText]}
           />
-          {/* <View style={[styles.chatText, styles.senderText]} />
-          <View style={[styles.chatText, styles.ownerText]} />
-          <View style={[styles.chatText, styles.senderText]} /> */}
         </View>
         <View style={styles.chatBottom}>
           <Animated.View style={[styles.circle, rOutCircleColor]}>
