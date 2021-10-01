@@ -73,17 +73,17 @@ const MiniChat = ({ flavour = "light", onPress, active }: MiniChatProps) => {
       <Animated.View style={[styles.chat, chatFlvouredTextStyle, rChatStyle]}>
         <View style={styles.chatTop}>
           <Conversation
-            fill={theme.light.muted}
             style={[styles.chatText, styles.senderText]}
+            imageStyle={{ tintColor: theme.light.muted }}
           />
           <Conversation
             type="owner"
-            fill={theme.light.primary}
             style={[styles.chatText, styles.ownerText]}
+            imageStyle={{ tintColor: theme.light.primary }}
           />
           <Conversation
-            fill={theme.light.muted}
             style={[styles.chatText, styles.senderText]}
+            imageStyle={{ tintColor: theme.light.muted }}
           />
         </View>
         <View style={styles.chatBottom}>
@@ -135,9 +135,12 @@ const styles = StyleSheet.create({
   },
   senderText: {
     alignItems: "flex-start",
+    tintColor: theme.light.muted,
   },
   ownerText: {
     alignSelf: "flex-end",
+
+    // backgroundColor: theme.light.primary,
   },
   chatBottom: {
     flex: 1,
