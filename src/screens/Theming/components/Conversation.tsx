@@ -1,3 +1,4 @@
+import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import {
   ImageStyle,
@@ -49,7 +50,20 @@ const Conversation = ({
     };
   });
 
-  return (
+  return type === "owner" && chatTheme === "light" ? (
+    <LinearGradient
+      style={[
+        {
+          borderRadius: StyleGuide.spacing / 2,
+          alignSelf,
+        },
+        style,
+      ]}
+      colors={["#0082c8", "#667db6"]}
+    >
+      {children}
+    </LinearGradient>
+  ) : (
     <Animated.View
       style={[
         {
