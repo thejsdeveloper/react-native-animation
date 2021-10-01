@@ -9,7 +9,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import StyleGuide, { Theme, theme } from "../../components/StyleGuide";
-import MiniChat from "./MiniChat";
+import MiniChat from "./components/MiniChat";
 const AnimatedSafeArea = Animated.createAnimatedComponent(SafeAreaView);
 
 const ThemeScreen = () => {

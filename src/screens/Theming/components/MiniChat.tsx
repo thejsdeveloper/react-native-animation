@@ -6,7 +6,9 @@ import Animated, {
   useDerivedValue,
   withTiming,
 } from "react-native-reanimated";
-import StyleGuide, { Theme, theme } from "../../components/StyleGuide";
+import StyleGuide, { Theme, theme } from "../../../components/StyleGuide";
+import Self from "./Self";
+import Sender from "./Sender";
 
 type MiniChatProps = {
   flavour?: Theme;
@@ -75,9 +77,21 @@ const MiniChat = ({ flavour = "light", onPress, active }: MiniChatProps) => {
     <Pressable onPress={() => onPress(flavour)}>
       <Animated.View style={[styles.chat, chatFlvouredTextStyle, rChatStyle]}>
         <View style={styles.chatTop}>
-          <View style={[styles.chatText, styles.senderText]} />
+          <Sender
+            fill={theme.light.muted}
+            style={[styles.chatText, styles.senderText]}
+          />
+          <Self
+            fill={theme.light.primary}
+            style={[styles.chatText, styles.ownerText]}
+          />
+          <Sender
+            fill={theme.light.muted}
+            style={[styles.chatText, styles.senderText]}
+          />
+          {/* <View style={[styles.chatText, styles.senderText]} />
           <View style={[styles.chatText, styles.ownerText]} />
-          <View style={[styles.chatText, styles.senderText]} />
+          <View style={[styles.chatText, styles.senderText]} /> */}
         </View>
         <View style={styles.chatBottom}>
           <Animated.View style={[styles.circle, rOutCircleColor]}>
@@ -119,22 +133,16 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "flex-start",
     alignItems: "flex-start",
-    padding: 10,
+    padding: StyleGuide.spacing,
   },
   chatText: {
     height: 20,
     width: "70%",
-    borderRadius: 5,
-    marginBottom: 5,
   },
-
   senderText: {
-    backgroundColor: theme.light.muted,
     alignItems: "flex-start",
   },
-
   ownerText: {
-    backgroundColor: theme.light.primary,
     alignSelf: "flex-end",
   },
   chatBottom: {
