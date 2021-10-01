@@ -1,6 +1,7 @@
 import React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import Animated, {
+  interpolate,
   interpolateColor,
   useAnimatedStyle,
   useDerivedValue,
@@ -16,45 +17,40 @@ type MiniChatProps = {
 };
 
 const MiniChat = ({ flavour = "light", onPress, active }: MiniChatProps) => {
-  const circleBgColor =
-    flavour === "dark" ? theme.light.tertiary : theme.light.primary;
-
-  const circleOrderColor =
+  const outputColor =
     flavour === "dark" ? theme.light.tertiary : theme.light.primary;
 
   const chatFlvouredTextStyle = {
     backgroundColor: theme[flavour].tertiary,
   };
 
-  const scale = useDerivedValue(() => {
-    return active ? withTiming(1.2) : withTiming(1);
+  const progress = useDerivedValue(() => {
+    return active ? withTiming(1) : withTiming(0);
   }, [active]);
 
   const rChatStyle = useAnimatedStyle(() => {
+    const scale = interpolate(progress.value, [0, 1], [1, 1.2]);
     return {
       transform: [
         {
-          scale: scale.value,
+          scale,
         },
       ],
     };
   });
 
-  const innerCircleScale = useDerivedValue(() => {
-    return active ? withTiming(0.6) : withTiming(1);
-  }, [active]);
-
   const rInnerCircleStyle = useAnimatedStyle(() => {
+    const scale = interpolate(progress.value, [0, 1], [1, 0.6]);
     const backgroundColor = interpolateColor(
-      innerCircleScale.value,
-      [0.6, 1],
-      [circleBgColor, "transparent"]
+      progress.value,
+      [0, 1],
+      ["transparent", outputColor]
     );
 
     return {
       transform: [
         {
-          scale: innerCircleScale.value,
+          scale,
         },
       ],
       backgroundColor,
@@ -63,9 +59,9 @@ const MiniChat = ({ flavour = "light", onPress, active }: MiniChatProps) => {
 
   const rOutCircleColor = useAnimatedStyle(() => {
     const borderColor = interpolateColor(
-      innerCircleScale.value,
-      [0.6, 1],
-      [circleOrderColor, "lightgrey"]
+      progress.value,
+      [0, 1],
+      ["lightgrey", outputColor]
     );
     return {
       borderColor,
