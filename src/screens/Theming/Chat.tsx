@@ -41,6 +41,8 @@ const styles = StyleSheet.create({
     maxWidth: SCREEN_WIDTH * 0.7,
     padding: 10,
     marginBottom: 10,
+    marginTop: 20,
+    marginHorizontal: StyleGuide.spacing,
   },
   replyContainer: {
     borderLeftWidth: 3,
