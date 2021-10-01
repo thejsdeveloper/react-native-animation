@@ -1,3 +1,5 @@
+import { TextStyle } from "react-native";
+
 const StyleGuide = {
   spacing: 8,
   shadow: 4,
@@ -41,6 +43,18 @@ const StyleGuide = {
       fontSize: 15,
       lineHeight: 20,
     },
+    title: {
+      fontSize: 14,
+      fontWeight: "600",
+    },
+    body1: {
+      fontSize: 14,
+      color: "white",
+    },
+    message: {
+      fontSize: 16,
+      color: "white",
+    },
     title1: {
       fontSize: 34,
       lineHeight: 41,
@@ -53,7 +67,7 @@ const StyleGuide = {
       fontSize: 22,
       lineHeight: 26,
     },
-  },
+  } as Record<string, TextStyle>,
 };
 
 export default StyleGuide;

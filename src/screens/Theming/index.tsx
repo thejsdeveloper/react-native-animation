@@ -9,6 +9,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import StyleGuide, { Theme, theme } from "../../components/StyleGuide";
+import Chat from "./Chat";
 import MiniChat from "./components/MiniChat";
 const AnimatedSafeArea = Animated.createAnimatedComponent(SafeAreaView);
 
@@ -36,7 +37,11 @@ const ThemeScreen = () => {
 
   return (
     <>
-      <Animated.View style={[styles.top, rTopStyle]}></Animated.View>
+      <Animated.View style={[styles.top, rTopStyle]}>
+        <SafeAreaView>
+          <Chat chatTheme={chatTheme} />
+        </SafeAreaView>
+      </Animated.View>
       <View style={[styles.bottom]}>
         <LinearGradient
           start={{

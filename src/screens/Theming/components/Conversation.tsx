@@ -7,28 +7,69 @@ import {
   View,
   ViewStyle,
 } from "react-native";
-
-type UserType = "owner" | "sender";
+import Animated, {
+  interpolateColor,
+  useAnimatedStyle,
+} from "react-native-reanimated";
+import StyleGuide, { Theme, theme } from "../../../components/StyleGuide";
+import { UserType } from "../Chat";
+import { useThemeProgress } from "./useProgress";
 
 type ConversationProps = {
   style?: StyleProp<ViewStyle>;
   imageStyle?: StyleProp<ImageStyle>;
   type?: UserType;
+  children?: React.ReactNode;
+  chatTheme?: Theme;
 };
 
 const Conversation = ({
   type = "sender",
   style,
-  imageStyle,
+  children,
+  chatTheme = "dark",
 }: ConversationProps) => {
-  const image =
+  const bgColorRange =
     type === "sender"
-      ? require("../../../../assets/images/sender.png")
-      : require("../../../../assets/images/owner.png");
+      ? [theme.light.muted, theme.dark.muted]
+      : [theme.light.primary, theme.light.primary];
 
-  return <ImageBackground {...{ style, imageStyle }} source={image} />;
+  const alignSelf = type === "sender" ? "flex-start" : "flex-end";
+
+  const progress = useThemeProgress(chatTheme);
+
+  const rStyleContainer = useAnimatedStyle(() => {
+    const backgroundColor = interpolateColor(
+      progress.value,
+      [0, 1],
+      bgColorRange
+    );
+
+    return {
+      backgroundColor,
+    };
+  });
+
+  return (
+    <Animated.View
+      style={[
+        {
+          borderRadius: StyleGuide.spacing / 2,
+          alignSelf,
+        },
+        style,
+        rStyleContainer,
+      ]}
+    >
+      {children}
+    </Animated.View>
+  );
 };
 
 export default Conversation;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    borderRadius: StyleGuide.spacing / 2,
+  },
+});
