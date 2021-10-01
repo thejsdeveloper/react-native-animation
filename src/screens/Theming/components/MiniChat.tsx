@@ -129,8 +129,9 @@ const styles = StyleSheet.create({
     padding: StyleGuide.spacing,
   },
   chatText: {
-    height: 20,
+    height: 15,
     width: "70%",
+    marginTop: 5,
   },
   senderText: {
     alignItems: "flex-start",
