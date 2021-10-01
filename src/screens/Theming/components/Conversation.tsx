@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleProp, StyleSheet, ViewStyle } from "react-native";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { SvgXml } from "react-native-svg";
 
 const senderXML = `<svg  viewBox="0 0 273 62" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -16,8 +16,6 @@ const ownerXML = `<svg  viewBox="0 0 273 62" fill="none" xmlns="http://www.w3.or
 type UserType = "owner" | "sender";
 
 type ConversationProps = {
-  width?: number;
-  height?: number;
   fill: string;
   style?: StyleProp<ViewStyle>;
   children?: React.ReactNode;
@@ -25,17 +23,26 @@ type ConversationProps = {
 };
 const Conversation = ({
   children,
+  style,
   type = "sender",
-  ...props
+  fill,
 }: ConversationProps) => {
   const xml = type === "sender" ? senderXML : ownerXML;
   return (
-    <SvgXml xml={xml} {...props}>
+    <View {...{ style }}>
+      <SvgXml xml={xml} fill={fill} style={styles.svg} />
       {children}
-    </SvgXml>
+    </View>
   );
 };
 
 export default Conversation;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  svg: {
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: 0,
+  },
+});
