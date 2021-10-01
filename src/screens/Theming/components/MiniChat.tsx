@@ -139,8 +139,6 @@ const styles = StyleSheet.create({
   },
   ownerText: {
     alignSelf: "flex-end",
-
-    // backgroundColor: theme.light.primary,
   },
   chatBottom: {
     flex: 1,

@@ -1,24 +1,20 @@
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useCallback, useState } from "react";
-import { StyleSheet, Text, View, Switch, Dimensions } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Animated, {
   interpolateColor,
   useAnimatedStyle,
-  useDerivedValue,
-  withTiming,
 } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import StyleGuide, { Theme, theme } from "../../components/StyleGuide";
 import Chat from "./Chat";
 import MiniChat from "./components/MiniChat";
-const AnimatedSafeArea = Animated.createAnimatedComponent(SafeAreaView);
+import { useThemeProgress } from "./components/useProgress";
 
 const ThemeScreen = () => {
   const [chatTheme, setChatTheme] = useState<Theme>("dark");
 
-  const progress = useDerivedValue(() => {
-    return chatTheme === "dark" ? withTiming(1) : withTiming(0);
-  }, [chatTheme]);
+  const progress = useThemeProgress(chatTheme);
 
   const rTopStyle = useAnimatedStyle(() => {
     const backgroundColor = interpolateColor(

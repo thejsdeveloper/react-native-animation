@@ -1,10 +1,8 @@
 import React from "react";
-import { StyleSheet, Text, TextProps, View } from "react-native";
+import { TextProps } from "react-native";
 import Animated, {
   interpolateColor,
   useAnimatedStyle,
-  useDerivedValue,
-  withTiming,
 } from "react-native-reanimated";
 import { Theme, theme } from "../../../components/StyleGuide";
 import { useThemeProgress } from "./useProgress";
