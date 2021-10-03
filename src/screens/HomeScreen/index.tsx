@@ -4,33 +4,7 @@ import React from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 import StyleGuide from "../../components/StyleGuide";
-import { Routes } from "../../navigation/Routes";
-
-const screens: {
-  screen: keyof Routes;
-  title: string;
-}[] = [
-  {
-    screen: "PanGesture",
-    title: "💳 PanGesture",
-  },
-  {
-    screen: "SwipeToDelete",
-    title: "🌊 Swipe To Delete",
-  },
-  {
-    screen: "SwipeToDeleteWithUserFeedback",
-    title: "🌊 Swipe To Delete with User feedback",
-  },
-  {
-    screen: "TapGesture",
-    title: "♥️ 👍🏽 Tap to like and love",
-  },
-  {
-    screen: "Theming",
-    title: "💅🏽 Change Theme",
-  },
-];
+import { Routes, SCREENS as screens } from "../../navigation/Routes";
 
 const HomeScreen = () => {
   const { navigate } =

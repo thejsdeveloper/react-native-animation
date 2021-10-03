@@ -4,6 +4,7 @@ export type Routes = {
   SwipeToDelete: undefined;
   SwipeToDeleteWithUserFeedback: undefined;
   TapGesture: undefined;
+  SwipeSurfing: undefined;
   Theming: undefined;
   PanGesture: undefined;
   Animations: undefined;
@@ -16,3 +17,33 @@ export type Routes = {
   ShapeMorphing: undefined;
   Accordion: undefined;
 };
+
+export const SCREENS: {
+  screen: keyof Routes;
+  title: string;
+}[] = [
+  {
+    screen: "PanGesture",
+    title: "💳 PanGesture",
+  },
+  {
+    screen: "SwipeToDelete",
+    title: "🌊 Swipe To Delete",
+  },
+  {
+    screen: "SwipeToDeleteWithUserFeedback",
+    title: "🌊 Swipe To Delete with User feedback",
+  },
+  {
+    screen: "TapGesture",
+    title: "♥️ 👍🏽 Tap to like and love",
+  },
+  {
+    screen: "Theming",
+    title: "💅🏽 Change Theme",
+  },
+  {
+    screen: "Theming",
+    title: "💅🏽 Change Theme",
+  },
+];
