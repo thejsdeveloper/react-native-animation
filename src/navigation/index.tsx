@@ -11,7 +11,7 @@ import * as React from "react";
 import AppLoading from "expo-app-loading";
 
 import { ColorSchemeName } from "react-native";
-import { Routes } from "./Routes";
+import { Routes, SCREENS } from "./Routes";
 
 import PanGesture from "../screens/PanGesture";
 import HomeScreen from "../screens/HomeScreen";
@@ -19,6 +19,7 @@ import DemoSwipeToDelete from "../screens/SwipeToDelete";
 import DemoSwipeToDeleteWithUserFeedback from "../screens/UserFeedbackSwipeToDelete";
 import TapToLike from "../screens/TapGesture";
 import ThemeScreen from "../screens/Theming";
+import SwipeSurfing from "../screens/SwipeSurfing";
 
 const Stack = createNativeStackNavigator<Routes>();
 
@@ -76,46 +77,21 @@ export default function Navigation({
           }}
         />
 
-        <Stack.Screen
-          name="PanGesture"
-          component={PanGesture}
-          options={{
-            title: "PanGesture",
-          }}
-        />
-
-        <Stack.Screen
-          name="SwipeToDelete"
-          component={DemoSwipeToDelete}
-          options={{
-            title: "Task List",
-          }}
-        />
-
-        <Stack.Screen
-          name="SwipeToDeleteWithUserFeedback"
-          component={DemoSwipeToDeleteWithUserFeedback}
-          options={{
-            title: "Task List",
-          }}
-        />
-
-        <Stack.Screen
-          name="TapGesture"
-          component={TapToLike}
-          options={{
-            title: "♥️ ❌ 👍🏽",
-          }}
-        />
-
-        <Stack.Screen
-          name="Theming"
-          component={ThemeScreen}
-          options={{
-            title: "Chat Setting",
-            headerShown: false,
-          }}
-        />
+        {SCREENS.map((scr) => {
+          const title = scr.title;
+          console.log("title ->", title);
+          return (
+            <Stack.Screen
+              key={scr.screen}
+              name={scr.screen}
+              component={scr.component}
+              options={{
+                title,
+                headerShown: scr.showHeader,
+              }}
+            />
+          );
+        })}
       </Stack.Navigator>
     </NavigationContainer>
   );

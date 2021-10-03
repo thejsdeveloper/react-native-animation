@@ -1,3 +1,12 @@
+import React from "react";
+import HomeScreen from "../screens/HomeScreen";
+import PanGesture from "../screens/PanGesture";
+import SwipeSurfing from "../screens/SwipeSurfing";
+import DemoSwipeToDelete from "../screens/SwipeToDelete";
+import TapToLike from "../screens/TapGesture";
+import ThemeScreen from "../screens/Theming";
+import DemoSwipeToDeleteWithUserFeedback from "../screens/UserFeedbackSwipeToDelete";
+
 export type Routes = {
   Home: undefined;
   Transitions: undefined;
@@ -18,32 +27,54 @@ export type Routes = {
   Accordion: undefined;
 };
 
-export const SCREENS: {
+type Screen = {
   screen: keyof Routes;
   title: string;
-}[] = [
-  {
-    screen: "PanGesture",
-    title: "💳 PanGesture",
-  },
-  {
-    screen: "SwipeToDelete",
-    title: "🌊 Swipe To Delete",
-  },
-  {
-    screen: "SwipeToDeleteWithUserFeedback",
-    title: "🌊 Swipe To Delete with User feedback",
-  },
-  {
-    screen: "TapGesture",
-    title: "♥️ 👍🏽 Tap to like and love",
-  },
-  {
-    screen: "Theming",
-    title: "💅🏽 Change Theme",
-  },
-  {
-    screen: "Theming",
-    title: "💅🏽 Change Theme",
-  },
-];
+  component: React.ComponentType;
+  showHeader: boolean;
+};
+
+const getScreen = (): Screen[] => {
+  const showHeader = true;
+
+  return [
+    {
+      screen: "PanGesture",
+      title: "💳 PanGesture",
+      component: PanGesture,
+      showHeader,
+    },
+    {
+      screen: "SwipeToDelete",
+      title: "🌊 Swipe To Delete",
+      component: DemoSwipeToDelete,
+      showHeader,
+    },
+    {
+      screen: "SwipeToDeleteWithUserFeedback",
+      title: "🌊 Swipe To Delete with User feedback",
+      component: DemoSwipeToDeleteWithUserFeedback,
+      showHeader,
+    },
+    {
+      screen: "TapGesture",
+      title: "♥️ 👍🏽 Tap to like and love",
+      component: TapToLike,
+      showHeader,
+    },
+    {
+      screen: "Theming",
+      title: "💅🏽 Change Theme",
+      component: ThemeScreen,
+      showHeader: false,
+    },
+    {
+      screen: "SwipeSurfing",
+      title: "🌊 Swipe Surfing",
+      component: SwipeSurfing,
+      showHeader,
+    },
+  ];
+};
+
+export const SCREENS = getScreen();
