@@ -78,15 +78,13 @@ export default function Navigation({
         />
 
         {SCREENS.map((scr) => {
-          const title = scr.title;
-          console.log("title ->", title);
           return (
             <Stack.Screen
               key={scr.screen}
               name={scr.screen}
               component={scr.component}
               options={{
-                title,
+                title: scr.title,
                 headerShown: scr.showHeader,
               }}
             />
