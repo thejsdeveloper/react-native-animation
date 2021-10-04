@@ -72,7 +72,7 @@ const getScreen = (): Screen[] => {
       screen: "SwipeSurfing",
       title: "🌊 Swipe Surfing",
       component: SwipeSurfing,
-      showHeader,
+      showHeader: false,
     },
   ];
 };
