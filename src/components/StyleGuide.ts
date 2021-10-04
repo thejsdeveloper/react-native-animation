@@ -15,6 +15,7 @@ const StyleGuide = {
     darkgrey: "#22353c",
     darkerGrey: "#19272c",
     offWhite: "#E6E9EF",
+    black: "#1a1a1a",
   },
 
   typography: {

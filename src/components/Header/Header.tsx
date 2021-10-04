@@ -1,6 +1,14 @@
 import { AntDesign } from "@expo/vector-icons";
 import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  Pressable,
+  StyleProp,
+  StyleSheet,
+  Text,
+  TextStyle,
+  View,
+  ViewStyle,
+} from "react-native";
 import Animated from "react-native-reanimated";
 import StyleGuide from "../StyleGuide";
 import { LinearGradient } from "expo-linear-gradient";
@@ -11,12 +19,15 @@ type HeaderProps = {
   gradientConfig?: {
     colors: string[];
   };
+  style?: TextStyle;
 };
 
-type MainHeaderProps = Pick<HeaderProps, "title">;
+type MainHeaderProps = Pick<HeaderProps, "title" | "style">;
 
-const MainHeader = ({ title }: MainHeaderProps) => {
+const MainHeader = ({ title, style }: MainHeaderProps) => {
   const { goBack } = useNavigation();
+
+  const iconColor = style?.color || "white";
 
   return (
     <Animated.View style={[styles.container]}>
@@ -25,14 +36,14 @@ const MainHeader = ({ title }: MainHeaderProps) => {
           goBack();
         }}
       >
-        <AntDesign name="arrowleft" size={30} color="white" />
+        <AntDesign name="arrowleft" size={30} color={iconColor} />
       </Pressable>
-      <Text style={styles.title}>{title}</Text>
+      <Text style={[styles.title, style]}>{title}</Text>
     </Animated.View>
   );
 };
 
-const Header = ({ title, gradientConfig }: HeaderProps) => {
+const Header = ({ title, gradientConfig, style }: HeaderProps) => {
   return (
     <SafeAreaView style={[styles.container]}>
       {gradientConfig ? (
@@ -48,10 +59,10 @@ const Header = ({ title, gradientConfig }: HeaderProps) => {
           colors={gradientConfig.colors}
           style={[StyleSheet.absoluteFill, { justifyContent: "flex-end" }]}
         >
-          <MainHeader title={title} />
+          <MainHeader title={title} style={style} />
         </LinearGradient>
       ) : (
-        <MainHeader title={title} />
+        <MainHeader title={title} style={style} />
       )}
     </SafeAreaView>
   );
