@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: StyleGuide.spacing * 2,
-    marginBottom: 60,
   },
   imageContainer: {
     alignItems: "center",

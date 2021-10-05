@@ -31,11 +31,11 @@ const SwipeSurfing = () => {
           })}
         </View>
         {/* title */}
-        <View style={styles.fillCenter}>
+        <View style={[styles.fillCenter]}>
           <Text style={styles.text}>View Watch</Text>
         </View>
         {/* arrow */}
-        <View style={styles.fillCenter}>
+        <View style={[styles.fillCenter]}>
           <AntDesign
             name="arrowright"
             size={24}
@@ -59,6 +59,8 @@ const styles = StyleSheet.create({
     height: 50,
     flexDirection: "row",
     marginBottom: 50,
+    paddingHorizontal: StyleGuide.spacing * 2,
+    // backgroundColor: "red",
   },
   fillCenter: {
     flex: 1,
