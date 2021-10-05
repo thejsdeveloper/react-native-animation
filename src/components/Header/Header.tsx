@@ -44,9 +44,9 @@ const MainHeader = ({ title, style }: MainHeaderProps) => {
 };
 
 const Header = ({ title, gradientConfig, style }: HeaderProps) => {
-  return (
-    <SafeAreaView style={[styles.container]}>
-      {gradientConfig ? (
+  if (gradientConfig) {
+    return (
+      <SafeAreaView style={[styles.container]}>
         <LinearGradient
           start={{
             x: 0,
@@ -61,9 +61,13 @@ const Header = ({ title, gradientConfig, style }: HeaderProps) => {
         >
           <MainHeader title={title} style={style} />
         </LinearGradient>
-      ) : (
-        <MainHeader title={title} style={style} />
-      )}
+      </SafeAreaView>
+    );
+  }
+
+  return (
+    <SafeAreaView>
+      <MainHeader title={title} style={style} />
     </SafeAreaView>
   );
 };
