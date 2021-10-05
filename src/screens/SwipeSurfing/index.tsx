@@ -17,6 +17,7 @@ const SwipeSurfing = () => {
       <ScrollView
         style={{ flex: 1 }}
         horizontal
+        pagingEnabled
         showsHorizontalScrollIndicator={false}
       >
         {PAGES.map((page) => (

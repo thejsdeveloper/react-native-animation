@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
 
   image: {
     height: SCREEN_HEIGHT * 0.4,
+    // width: SCREEEN_WIDTH * 0.8,
     aspectRatio: 1,
   },
   title: {

@@ -19,9 +19,9 @@ export const PAGES: PageType[] = [
     source: require("../../../assets/images/watches/02.png"),
   },
   {
-    title: "run; White Wolf",
+    title: "run; Red White Wolf",
     description:
       "Become a ideal personal. Compete with the treands as you wish, May the fortune shine your life.",
-    source: require("../../../assets/images/watches/02.png"),
+    source: require("../../../assets/images/watches/03.png"),
   },
 ];
