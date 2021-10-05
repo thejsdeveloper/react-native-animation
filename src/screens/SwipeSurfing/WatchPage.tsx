@@ -8,11 +8,11 @@ const { width: SCREEEN_WIDTH, height: SCREEN_HEIGHT } =
 type WatchPageProps = {
   watch: PageType;
 };
+
 const WatchPage = ({ watch }: WatchPageProps) => {
   return (
     <View style={styles.container}>
-      <View style={styles.circleContainer}>
-        <View style={styles.circle} />
+      <View style={styles.imageContainer}>
         <Image style={styles.image} source={watch.source} />
       </View>
       <Text style={styles.title}>{watch.title}</Text>
@@ -31,11 +31,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: StyleGuide.spacing * 2,
     marginBottom: 60,
   },
-  circleContainer: {
+  imageContainer: {
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 50,
   },
-  circle: {},
+
   image: {
     height: SCREEN_HEIGHT * 0.4,
     aspectRatio: 1,
