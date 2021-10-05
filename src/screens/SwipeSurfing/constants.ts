@@ -7,7 +7,7 @@ export type PageType = Pick<ImageProps, "source"> & {
 
 export const PAGES: PageType[] = [
   {
-    title: "Walk with balck",
+    title: "Walk with black",
     description:
       "Identify your requirement and set your goals accordingly to ensure maximum outreach and genuine responses.",
     source: require("../../../assets/images/watches/01.png"),
