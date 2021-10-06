@@ -68,8 +68,6 @@ const WatchPage = ({ watch, translateX, index }: WatchPageProps) => {
           source={watch.source}
         />
       </View>
-      <Text style={styles.title}>{watch.title}</Text>
-      <Text style={styles.description}>{watch.description}</Text>
     </View>
   );
 };
@@ -92,17 +90,5 @@ const styles = StyleSheet.create({
   image: {
     height: SCREEN_HEIGHT * 0.4,
     aspectRatio: 1,
-  },
-  title: {
-    color: "white",
-    textAlign: "center",
-    fontSize: 35,
-    fontWeight: "700",
-    marginBottom: 15,
-  },
-  description: {
-    textAlign: "center",
-    fontSize: 14,
-    color: "lightgrey",
   },
 });

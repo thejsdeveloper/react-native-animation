@@ -12,6 +12,7 @@ import {
 import Animated, {
   useAnimatedRef,
   useAnimatedScrollHandler,
+  useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
 } from "react-native-reanimated";
@@ -19,6 +20,7 @@ import Header from "../../components/Header/Header";
 import StyleGuide from "../../components/StyleGuide";
 import { PAGES } from "./constants";
 import Dot from "./Dot";
+import { WatchDescription } from "./WatchDescription";
 import WatchPage from "./WatchPage";
 const { width: SCREEEN_WIDTH, height: SCREEN_HEIGHT } =
   Dimensions.get("screen");
@@ -45,24 +47,36 @@ const SwipeSurfing = () => {
     <View style={styles.container}>
       <StatusBar style="auto" />
       <Header title="Join with us!" />
-      <Animated.ScrollView
-        ref={scrollRef as any}
-        style={{ flex: 1 }}
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        onScroll={onScrollHandler}
-        scrollEventThrottle={16}
-      >
-        {PAGES.map((page, index) => (
-          <WatchPage
-            key={page.title}
-            watch={page}
-            translateX={translateX}
-            index={index}
-          />
-        ))}
-      </Animated.ScrollView>
+      <View style={{ flex: 1 }}>
+        <Animated.ScrollView
+          ref={scrollRef as any}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          onScroll={onScrollHandler}
+          scrollEventThrottle={16}
+        >
+          {PAGES.map((page, index) => (
+            <WatchPage
+              key={page.title}
+              watch={page}
+              translateX={translateX}
+              index={index}
+            />
+          ))}
+        </Animated.ScrollView>
+        {PAGES.map((page, index) => {
+          return (
+            <WatchDescription
+              key={index.toString()}
+              title={page.title}
+              description={page.description}
+              index={index}
+              activeIndex={activeIndex}
+            />
+          );
+        })}
+      </View>
       <View style={styles.footer}>
         {/* paginator */}
         <View style={[styles.fillCenter, { flexDirection: "row" }]}>
@@ -101,12 +115,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: StyleGuide.palette.black,
   },
+
   footer: {
     height: 50,
     flexDirection: "row",
     marginBottom: 50,
     paddingHorizontal: StyleGuide.spacing * 2,
-    // backgroundColor: "red",
   },
   fillCenter: {
     flex: 1,
