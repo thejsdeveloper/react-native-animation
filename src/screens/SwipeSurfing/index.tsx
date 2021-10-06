@@ -1,29 +1,61 @@
 import { AntDesign } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Dimensions,
+} from "react-native";
+import Animated, {
+  useAnimatedScrollHandler,
+  useDerivedValue,
+  useSharedValue,
+} from "react-native-reanimated";
 import Header from "../../components/Header/Header";
 import StyleGuide from "../../components/StyleGuide";
 import { PAGES } from "./constants";
 import Dot from "./Dot";
 import WatchPage from "./WatchPage";
+const { width: SCREEEN_WIDTH, height: SCREEN_HEIGHT } =
+  Dimensions.get("screen");
 
 const SwipeSurfing = () => {
+  const translateX = useSharedValue<number>(0);
+
+  const onScrollHandler = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      translateX.value = event.contentOffset.x;
+    },
+  });
+
+  const activeIndex = useDerivedValue(() => {
+    return Math.round(translateX.value / SCREEEN_WIDTH);
+  });
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <Header title="Join with us!" />
-      <ScrollView
+      <Animated.ScrollView
         style={{ flex: 1 }}
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
+        onScroll={onScrollHandler}
+        scrollEventThrottle={16}
       >
-        {PAGES.map((page) => (
-          <WatchPage key={page.title} watch={page} />
+        {PAGES.map((page, index) => (
+          <WatchPage
+            key={page.title}
+            watch={page}
+            translateX={translateX}
+            index={index}
+          />
         ))}
-      </ScrollView>
+      </Animated.ScrollView>
       <View style={styles.footer}>
         {/* paginator */}
         <View style={[styles.fillCenter, { flexDirection: "row" }]}>
