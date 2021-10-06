@@ -60,7 +60,13 @@ const SwipeSurfing = () => {
         {/* paginator */}
         <View style={[styles.fillCenter, { flexDirection: "row" }]}>
           {PAGES.map((_, index) => {
-            return <Dot key={index.toString()} />;
+            return (
+              <Dot
+                key={index.toString()}
+                activeIndex={activeIndex}
+                index={index}
+              />
+            );
           })}
         </View>
         {/* title */}
