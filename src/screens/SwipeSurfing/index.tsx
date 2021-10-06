@@ -10,6 +10,7 @@ import {
   Dimensions,
 } from "react-native";
 import Animated, {
+  useAnimatedRef,
   useAnimatedScrollHandler,
   useDerivedValue,
   useSharedValue,
@@ -24,7 +25,7 @@ const { width: SCREEEN_WIDTH, height: SCREEN_HEIGHT } =
 
 const SwipeSurfing = () => {
   const translateX = useSharedValue<number>(0);
-
+  const scrollRef = useAnimatedRef<ScrollView>();
   const onScrollHandler = useAnimatedScrollHandler({
     onScroll: (event) => {
       translateX.value = event.contentOffset.x;
@@ -35,11 +36,17 @@ const SwipeSurfing = () => {
     return Math.round(translateX.value / SCREEEN_WIDTH);
   });
 
+  const onIconPress = () => {
+    if (activeIndex.value === PAGES.length) return;
+    scrollRef.current?.scrollTo({ x: SCREEEN_WIDTH * (activeIndex.value + 1) });
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <Header title="Join with us!" />
       <Animated.ScrollView
+        ref={scrollRef as any}
         style={{ flex: 1 }}
         horizontal
         pagingEnabled
@@ -79,7 +86,7 @@ const SwipeSurfing = () => {
             name="arrowright"
             size={24}
             color="white"
-            // onPress={onIconPress}
+            onPress={onIconPress}
           />
         </View>
       </View>
