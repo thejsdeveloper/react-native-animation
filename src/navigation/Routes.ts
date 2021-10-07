@@ -1,4 +1,5 @@
 import React from "react";
+import Bottombar from "../screens/Bottombar";
 import HomeScreen from "../screens/HomeScreen";
 import PanGesture from "../screens/PanGesture";
 import SwipeSurfing from "../screens/SwipeSurfing";
@@ -15,6 +16,7 @@ export type Routes = {
   TapGesture: undefined;
   SwipeSurfing: undefined;
   Theming: undefined;
+  BottombarNavigation: undefined;
   PanGesture: undefined;
   Animations: undefined;
   CircularSlider: undefined;
@@ -72,6 +74,12 @@ const getScreen = (): Screen[] => {
       screen: "SwipeSurfing",
       title: "⌚️ Watch Gallery",
       component: SwipeSurfing,
+      showHeader: false,
+    },
+    {
+      screen: "BottombarNavigation",
+      title: "☞ 🛴 Bottom Tab",
+      component: Bottombar,
       showHeader: false,
     },
   ];
