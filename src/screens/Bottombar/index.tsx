@@ -16,15 +16,28 @@ import Animated, {
 } from "react-native-reanimated";
 import { clamp } from "react-native-redash";
 import Header from "../../components/Header/Header";
-import Icon, { IconName, ICON_MAP, ICON_SIZE } from "./Icon";
+import StyleGuide from "../../components/StyleGuide";
+import Icon, { IconName } from "./Icon";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
-const SIZE = ICON_SIZE * 2;
+
+const TABS: IconName[] = ["home", "search", "message", "activity", "profile"];
+
 const TAB_WIDTH = SCREEN_WIDTH * 0.9;
+const CIRCLE_SIZE = Math.floor(TAB_WIDTH / TABS.length);
 
 const Bottombar = () => {
   const [activeIndex, setActiveIndex] = React.useState<number>(() => 0);
-  const translateX = useSharedValue<number>(0);
+
+  const rStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          translateX: withTiming(activeIndex * CIRCLE_SIZE),
+        },
+      ],
+    };
+  }, [activeIndex]);
 
   return (
     <LinearGradient
@@ -41,17 +54,19 @@ const Bottombar = () => {
     >
       <Header title="Bottom tab Navigation" />
 
-      <Animated.View style={[styles.bottomTab]}>
-        <Animated.View style={[styles.circle]} />
-        {Object.keys(ICON_MAP).map((key, index) => (
+      <View style={[styles.bottomTab]}>
+        <Animated.View style={[styles.circle, rStyle]}>
+          <View style={styles.dot} />
+        </Animated.View>
+        {TABS.map((key, index) => (
           <Icon
             key={key}
-            type={key as IconName}
+            type={key}
             onPress={() => setActiveIndex(index)}
             active={activeIndex === index}
           />
         ))}
-      </Animated.View>
+      </View>
     </LinearGradient>
   );
 };
@@ -73,15 +88,23 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     alignItems: "center",
     justifyContent: "space-around",
-    paddingHorizontal: 10,
   },
   circle: {
-    width: SIZE,
-    height: SIZE,
-    borderRadius: SIZE / 2,
+    width: CIRCLE_SIZE,
+    height: CIRCLE_SIZE,
+    borderRadius: CIRCLE_SIZE / 2,
     position: "absolute",
-    backgroundColor: "green",
-    // left: 10,
+    backgroundColor: "#fff",
+    left: 0,
     bottom: 5,
+    alignItems: "center",
+    justifyContent: "flex-end",
+  },
+
+  dot: {
+    backgroundColor: StyleGuide.palette.telegramBlue,
+    width: 10,
+    height: 10,
+    borderRadius: 999,
   },
 });
