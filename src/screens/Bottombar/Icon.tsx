@@ -74,7 +74,7 @@ const Icon = ({ name, onPress, active }: IconProps) => {
 
   const rTextStyle = useAnimatedStyle(() => {
     return {
-      opacity: active ? withTiming(0) : withTiming(1),
+      opacity: active ? 0 : withTiming(1),
     };
   }, [active]);
 
