@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   bottomTab: {
     width: TAB_WIDTH,
     paddingVertical: 10,
-    marginTop: 200,
+    marginTop: 300,
     backgroundColor: "#fff",
     borderRadius: 10,
     flexDirection: "row",
