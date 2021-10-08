@@ -21,7 +21,7 @@ import Icon, { IconName } from "./Icon";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
-const TABS: IconName[] = ["home", "search", "message", "activity", "profile"];
+const TABS: IconName[] = ["Home", "Search", "Message", "Activity", "Profile"];
 
 const TAB_WIDTH = SCREEN_WIDTH * 0.9;
 const CIRCLE_SIZE = Math.floor(TAB_WIDTH / TABS.length);
@@ -61,7 +61,7 @@ const Bottombar = () => {
         {TABS.map((key, index) => (
           <Icon
             key={key}
-            type={key}
+            name={key}
             onPress={() => setActiveIndex(index)}
             active={activeIndex === index}
           />
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
 
   bottomTab: {
     width: TAB_WIDTH,
-    height: 70,
+    paddingVertical: 10,
     marginTop: 200,
     backgroundColor: "#fff",
     borderRadius: 10,
@@ -96,15 +96,16 @@ const styles = StyleSheet.create({
     position: "absolute",
     backgroundColor: "#fff",
     left: 0,
-    bottom: 5,
+    bottom: 6,
     alignItems: "center",
     justifyContent: "flex-end",
   },
 
   dot: {
     backgroundColor: StyleGuide.palette.telegramBlue,
-    width: 10,
-    height: 10,
+    width: 8,
+    height: 8,
     borderRadius: 999,
+    marginBottom: 8,
   },
 });

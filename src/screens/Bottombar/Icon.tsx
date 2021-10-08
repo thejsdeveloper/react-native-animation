@@ -1,25 +1,24 @@
 import { AntDesign, Feather, Ionicons, Octicons } from "@expo/vector-icons";
 import React from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { TapGestureHandler } from "react-native-gesture-handler";
 import Animated, {
   useAnimatedStyle,
-  useSharedValue,
   withTiming,
 } from "react-native-reanimated";
 import StyleGuide from "../../components/StyleGuide";
 
-export type IconName = "home" | "search" | "message" | "activity" | "profile";
+export type IconName = "Home" | "Search" | "Message" | "Activity" | "Profile";
 
 type IconProps = {
-  type: IconName;
+  name: IconName;
   onPress: () => void;
   active: boolean;
 };
 
-const getIcon = (active: boolean, type: IconName) => {
-  switch (type) {
-    case "home":
+const getIcon = (name: IconName, active: boolean) => {
+  switch (name) {
+    case "Home":
       return (
         <Octicons
           name="home"
@@ -27,7 +26,7 @@ const getIcon = (active: boolean, type: IconName) => {
           color={active ? StyleGuide.palette.telegramBlue : "black"}
         />
       );
-    case "search":
+    case "Search":
       return (
         <Feather
           name="search"
@@ -35,7 +34,7 @@ const getIcon = (active: boolean, type: IconName) => {
           color={active ? StyleGuide.palette.telegramBlue : "black"}
         />
       );
-    case "message":
+    case "Message":
       return (
         <Ionicons
           name="chatbubbles-outline"
@@ -43,7 +42,7 @@ const getIcon = (active: boolean, type: IconName) => {
           color={active ? StyleGuide.palette.telegramBlue : "black"}
         />
       );
-    case "activity":
+    case "Activity":
       return (
         <Feather
           name="activity"
@@ -51,7 +50,7 @@ const getIcon = (active: boolean, type: IconName) => {
           color={active ? StyleGuide.palette.telegramBlue : "black"}
         />
       );
-    case "profile":
+    case "Profile":
       return (
         <AntDesign
           name="user"
@@ -62,27 +61,29 @@ const getIcon = (active: boolean, type: IconName) => {
   }
 };
 
-const Icon = ({ type, onPress, active }: IconProps) => {
-  const translateY = useSharedValue<number>(0);
-
-  const handlePress = () => {
-    translateY.value = active ? withTiming(-10) : withTiming(0);
-    onPress();
-  };
-
-  const rStyle = useAnimatedStyle(() => {
+const Icon = ({ name, onPress, active }: IconProps) => {
+  const rIconStyle = useAnimatedStyle(() => {
     return {
       transform: [
         {
-          translateY: translateY.value,
+          translateY: active ? withTiming(-3) : withTiming(0),
         },
       ],
     };
-  });
+  }, [active]);
+
+  const rTextStyle = useAnimatedStyle(() => {
+    return {
+      opacity: active ? withTiming(0) : withTiming(1),
+    };
+  }, [active]);
 
   return (
-    <TapGestureHandler onActivated={handlePress}>
-      <Animated.View style={[rStyle]}>{getIcon(active, type)}</Animated.View>
+    <TapGestureHandler onActivated={onPress}>
+      <Animated.View style={[styles.iconContainer, rIconStyle]}>
+        {getIcon(name, active)}
+        <Animated.Text style={[styles.text, rTextStyle]}>{name}</Animated.Text>
+      </Animated.View>
     </TapGestureHandler>
   );
 };
@@ -91,7 +92,15 @@ export default Icon;
 
 const styles = StyleSheet.create({
   iconContainer: {
+    flex: 1,
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
+  },
+
+  text: {
+    ...StyleGuide.typography.body1,
+    color: "#000",
+    marginTop: 5,
   },
 });
