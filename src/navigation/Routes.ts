@@ -6,6 +6,7 @@ import SwipeSurfing from "../screens/SwipeSurfing";
 import DemoSwipeToDelete from "../screens/SwipeToDelete";
 import TapToLike from "../screens/TapGesture";
 import ThemeScreen from "../screens/Theming";
+import TransitionScreen from "../screens/transition";
 import DemoSwipeToDeleteWithUserFeedback from "../screens/UserFeedbackSwipeToDelete";
 
 export type Routes = {
@@ -81,6 +82,12 @@ const getScreen = (): Screen[] => {
       title: "☞ 🛴 Bottom Tab",
       component: Bottombar,
       showHeader: false,
+    },
+    {
+      screen: "Transitions",
+      title: "💳 Card transition",
+      component: TransitionScreen,
+      showHeader,
     },
   ];
 };
