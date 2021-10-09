@@ -1,6 +1,5 @@
 import React from "react";
 import Bottombar from "../screens/Bottombar";
-import HomeScreen from "../screens/HomeScreen";
 import PanGesture from "../screens/PanGesture";
 import SwipeSurfing from "../screens/SwipeSurfing";
 import DemoSwipeToDelete from "../screens/SwipeToDelete";
