@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 const TransitionScreen = () => {
   return (
     <View>
-      <Text>Transition Screen</Text>
+      <Text>Transition Screen Added</Text>
     </View>
   );
 };
