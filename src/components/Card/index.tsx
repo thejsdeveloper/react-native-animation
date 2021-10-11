@@ -14,14 +14,13 @@ export const CARD_WIDTH = SCREEN_WIDTH * 0.8;
 export const CARD_HEIGHT = CARD_WIDTH / RATIO;
 
 type Index = 1 | 2 | 3 | 4;
-type CardType = `Card${Index}`;
+export type CardType = `Card${Index}`;
 
 type CardProps = {
   card: CardType;
 };
 
 const Card = ({ card }: CardProps) => {
-  const path = `../../../assets/images/${card}.png`;
   return <Image style={styles.card} source={cards[card]} />;
 };
 
