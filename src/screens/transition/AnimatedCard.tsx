@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useDebugValue } from "react";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import StyleGuide from "../../components/StyleGuide";
 import Card, { CardType } from "../../components/Card";
-import Animated from "react-native-reanimated";
+import Animated, {
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+} from "react-native-reanimated";
 
 const { width } = Dimensions.get("window");
 const origin = -(width / 2 - StyleGuide.spacing * 2);
@@ -10,24 +14,30 @@ const origin = -(width / 2 - StyleGuide.spacing * 2);
 type AnimationCardProps = {
   card: CardType;
   index: number;
-  toggled: boolean;
+  transition: Animated.SharedValue<number>;
 };
 
-const AnimatedCard = ({ card, index, toggled }: AnimationCardProps) => {
-  const alpha = toggled ? ((index - 1) * Math.PI) / 6 : 0;
+const AnimatedCard = ({ card, index, transition }: AnimationCardProps) => {
+  const rStyle = useAnimatedStyle(() => {
+    const alpha = interpolate(
+      transition.value,
+      [0, 1],
+      [0, ((index - 1) * Math.PI) / 6]
+    );
 
-  const style = {
-    transform: [
-      { translateX: origin },
-      {
-        rotate: `${alpha}rad`,
-      },
-      { translateX: -origin },
-    ],
-  };
+    return {
+      transform: [
+        { translateX: origin },
+        {
+          rotate: `${alpha}rad`,
+        },
+        { translateX: -origin },
+      ],
+    };
+  });
 
   return (
-    <Animated.View style={[styles.container, style]}>
+    <Animated.View style={[styles.container, rStyle]}>
       <Card card={card} />
     </Animated.View>
   );
