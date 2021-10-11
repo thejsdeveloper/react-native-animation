@@ -15,11 +15,7 @@ const CARDS: CardType[] = ["Card1", "Card2", "Card3"];
 
 const TransitionScreen = () => {
   const [toggled, setToggle] = useState(false);
-
   const transition = useSpring(toggled);
-  // const transition = useDerivedValue(() => {
-  //   return withSpring(toggled ? 1 : 0);
-  // }, [toggled]);
 
   return (
     <View style={styles.container}>
