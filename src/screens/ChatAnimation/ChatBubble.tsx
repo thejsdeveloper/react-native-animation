@@ -18,7 +18,6 @@ const ChatBubble = ({ progress }: ChatBubbleProps) => {
         {BUBBLES.map((bubble, index) => {
           const start = index * DELTA;
           const end = start + DELTA;
-
           return <Bubble key={bubble} {...{ start, end, progress }} />;
         })}
       </View>
