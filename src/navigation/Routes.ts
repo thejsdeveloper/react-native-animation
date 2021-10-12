@@ -1,6 +1,6 @@
 import React from "react";
 import Bottombar from "../screens/Bottombar";
-import ChatBubble from "../screens/ChatBubble";
+import ChatAnimationScreen from "../screens/ChatAnimation";
 import PanGesture from "../screens/PanGesture";
 import SwipeSurfing from "../screens/SwipeSurfing";
 import DemoSwipeToDelete from "../screens/SwipeToDelete";
@@ -93,7 +93,7 @@ const getScreen = (): Screen[] => {
     {
       screen: "ChatBubble",
       title: "💬 Chat Bubble",
-      component: ChatBubble,
+      component: ChatAnimationScreen,
       showHeader,
     },
   ];

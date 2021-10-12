@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Button from "../../components/Button";
 import StyleGuide from "../../components/StyleGuide";
+import ChatBubble from "./ChatBubble";
 
-const ChatBubble = () => {
+const ChatAnimationScreen = () => {
   const [play, setplay] = useState(false);
   return (
     <View style={styles.container}>
-      <Text>Chat Bubble</Text>
+      <ChatBubble />
       <Button
         primary
         label={play ? "Pause" : "Play"}
@@ -19,7 +20,7 @@ const ChatBubble = () => {
   );
 };
 
-export default ChatBubble;
+export default ChatAnimationScreen;
 
 const styles = StyleSheet.create({
   container: {
