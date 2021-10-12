@@ -1,16 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { useSharedValue, withTiming } from "react-native-reanimated";
+import { StyleSheet, View } from "react-native";
+import {
+  Easing,
+  useSharedValue,
+  withRepeat,
+  withTiming,
+} from "react-native-reanimated";
 import Button from "../../components/Button";
 import StyleGuide from "../../components/StyleGuide";
 import ChatBubble from "./ChatBubble";
+
+const easing = Easing.inOut(Easing.ease);
 
 const ChatAnimationScreen = () => {
   const [play, setplay] = useState(false);
   const progress = useSharedValue<number>(0);
 
   useEffect(() => {
-    progress.value = withTiming(1);
+    progress.value = withRepeat(
+      withTiming(1, {
+        duration: 1000,
+        easing,
+      }),
+      -1,
+      true
+    );
   }, [play]);
 
   return (
