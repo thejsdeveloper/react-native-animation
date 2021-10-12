@@ -1,5 +1,6 @@
 import React from "react";
 import Bottombar from "../screens/Bottombar";
+import ChatBubble from "../screens/ChatBubble";
 import PanGesture from "../screens/PanGesture";
 import SwipeSurfing from "../screens/SwipeSurfing";
 import DemoSwipeToDelete from "../screens/SwipeToDelete";
@@ -11,6 +12,7 @@ import DemoSwipeToDeleteWithUserFeedback from "../screens/UserFeedbackSwipeToDel
 export type Routes = {
   Home: undefined;
   Transitions: undefined;
+  ChatBubble: undefined;
   SwipeToDelete: undefined;
   SwipeToDeleteWithUserFeedback: undefined;
   TapGesture: undefined;
@@ -86,6 +88,12 @@ const getScreen = (): Screen[] => {
       screen: "Transitions",
       title: "💳 Card transition",
       component: TransitionScreen,
+      showHeader,
+    },
+    {
+      screen: "ChatBubble",
+      title: "💬 Chat Bubble",
+      component: ChatBubble,
       showHeader,
     },
   ];
