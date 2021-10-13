@@ -1,5 +1,6 @@
 import React from "react";
 import { Dimensions, PixelRatio, StyleSheet, Text, View } from "react-native";
+import CircularProgress from "./CircularProgress";
 import Cursor from "./Cursor";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
@@ -12,7 +13,7 @@ const CircularSlider = () => {
     <View style={styles.container}>
       <View style={styles.content}>
         <View style={StyleSheet.absoluteFill}>
-          <Text>Circular Progress</Text>
+          <CircularProgress {...{ r, strokeWidth }} />
         </View>
         <Cursor {...{ strokeWidth }} />
       </View>
@@ -31,6 +32,5 @@ const styles = StyleSheet.create({
   content: {
     width: r * 2,
     height: r * 2,
-    backgroundColor: "red",
   },
 });
