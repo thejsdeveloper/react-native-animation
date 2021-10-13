@@ -1,10 +1,20 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Dimensions, PixelRatio, StyleSheet, Text, View } from "react-native";
+
+const { width: SCREEN_WIDTH } = Dimensions.get("screen");
+const size = SCREEN_WIDTH - 32;
+const strokeWidth = 40;
+const r = PixelRatio.roundToNearestPixel(size / 2);
 
 const CircularSlider = () => {
   return (
     <View style={styles.container}>
-      <Text>CircularSlider</Text>
+      <View style={styles.content}>
+        <View style={StyleSheet.absoluteFill}>
+          <Text>Circular Progress</Text>
+        </View>
+        <Text>Cursor</Text>
+      </View>
     </View>
   );
 };
@@ -16,5 +26,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  content: {
+    width: r * 2,
+    height: r * 2,
+    backgroundColor: "red",
   },
 });
