@@ -1,5 +1,6 @@
 import React from "react";
 import { Dimensions, PixelRatio, StyleSheet, Text, View } from "react-native";
+import Cursor from "./Cursor";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 const size = SCREEN_WIDTH - 32;
@@ -13,7 +14,7 @@ const CircularSlider = () => {
         <View style={StyleSheet.absoluteFill}>
           <Text>Circular Progress</Text>
         </View>
-        <Text>Cursor</Text>
+        <Cursor {...{ strokeWidth }} />
       </View>
     </View>
   );
