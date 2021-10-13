@@ -1,6 +1,7 @@
 import React from "react";
 import Bottombar from "../screens/Bottombar";
 import ChatAnimationScreen from "../screens/ChatAnimation";
+import CircularSlider from "../screens/CircularSlider";
 import PanGesture from "../screens/PanGesture";
 import SwipeSurfing from "../screens/SwipeSurfing";
 import DemoSwipeToDelete from "../screens/SwipeToDelete";
@@ -94,6 +95,12 @@ const getScreen = (): Screen[] => {
       screen: "ChatBubble",
       title: "💬 Chat Bubble",
       component: ChatAnimationScreen,
+      showHeader,
+    },
+    {
+      screen: "CircularSlider",
+      title: "⭕️ Circular Slider",
+      component: CircularSlider,
       showHeader,
     },
   ];
