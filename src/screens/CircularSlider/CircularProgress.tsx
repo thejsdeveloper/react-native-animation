@@ -48,7 +48,7 @@ const CircularProgress = ({
         fill="transparent"
         r={radius}
         strokeWidth={strokeWidth}
-        strokeDasharray={`${circumference}, ${circumference}`}
+        strokeDasharray={circumference}
       />
     </Svg>
   );
