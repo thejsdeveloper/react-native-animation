@@ -15,13 +15,18 @@ const THRESHOLD = 0.001;
 
 type CursorProps = {
   strokeWidth: number;
-  r: number;
+  radius: number;
   theta: Animated.SharedValue<number>;
   backgroundColor: Animated.SharedValue<string | number>;
 };
 
-const Cursor = ({ strokeWidth, r, theta, backgroundColor }: CursorProps) => {
-  const center = { x: r, y: r };
+const Cursor = ({
+  strokeWidth,
+  radius,
+  theta,
+  backgroundColor,
+}: CursorProps) => {
+  const center = { x: radius, y: radius };
   const onGestureEvent = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
     {
@@ -29,18 +34,18 @@ const Cursor = ({ strokeWidth, r, theta, backgroundColor }: CursorProps) => {
     }
   >({
     onStart: (_, ctx) => {
-      ctx.offset = polar2Canvas({ theta: theta.value, radius: r }, center);
+      ctx.offset = polar2Canvas({ theta: theta.value, radius }, center);
     },
     onActive: (event, ctx) => {
       const x = ctx.offset.x + event.translationX;
       const y1 = ctx.offset.y + event.translationY;
       let y: number;
-      if (x < r) {
+      if (x < radius) {
         y = y1;
       } else if (theta.value < Math.PI) {
-        y = clamp(y1, 0, r - THRESHOLD);
+        y = clamp(y1, 0, radius - THRESHOLD);
       } else {
-        y = clamp(y1, r, 2 * r);
+        y = clamp(y1, radius, 2 * radius);
       }
       const value = canvas2Polar({ x, y }, center).theta;
       theta.value = value > 0 ? value : 2 * Math.PI + value;
@@ -48,7 +53,7 @@ const Cursor = ({ strokeWidth, r, theta, backgroundColor }: CursorProps) => {
   });
 
   const rStryle = useAnimatedStyle(() => {
-    const { x, y } = polar2Canvas({ theta: theta.value, radius: r }, center);
+    const { x, y } = polar2Canvas({ theta: theta.value, radius }, center);
 
     return {
       backgroundColor: backgroundColor.value,

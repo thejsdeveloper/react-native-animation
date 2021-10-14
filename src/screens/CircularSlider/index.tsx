@@ -31,11 +31,11 @@ const CircularSlider = () => {
     <View style={styles.container}>
       <View style={styles.content}>
         <View style={StyleSheet.absoluteFill}>
-          <CircularProgress {...{ r, strokeWidth, theta, backgroundColor }} />
+          <CircularProgress {...{ strokeWidth, r, theta, backgroundColor }} />
         </View>
         <Cursor
           {...{ strokeWidth, backgroundColor, theta }}
-          r={r - strokeWidth / 2}
+          radius={r - strokeWidth / 2}
         />
       </View>
     </View>
