@@ -1,6 +1,6 @@
 # react-native-animation
 
-This is a repo where I practice my React Native Animation Learnings
+This is a repo where I practice my React Native Animation Learnings with [Reanimated](https://docs.swmansion.com/react-native-reanimated/)
 
 ## Home Page
 
@@ -8,7 +8,7 @@ This is a repo where I practice my React Native Animation Learnings
 
 ## Examples
 
-| Page                                  | Gif                                                                                                                                                 |
+| Page                                  | Gif   |
 | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 💅🏽 Change Theme                       | <img src="https://github.com/thejsdeveloper/react-native-animation/blob/main/assets/example/gif/ThemeSwitcher.gif" width="200" height="400" />      |
 | 💳 Card Pan Gesture                   | <img src="https://github.com/thejsdeveloper/react-native-animation/blob/main/assets/example/gif/pangesture.gif" width="200" height="400" />         |
