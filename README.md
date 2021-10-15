@@ -8,7 +8,7 @@ This is a repo where I practice my React Native Animation Learnings with [Reanim
 
 ## Examples
 
-| Page                                  | Gif   |
+| Page                                  | Gif                                                                                                                                                 |
 | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 💅🏽 Change Theme                       | <img src="https://github.com/thejsdeveloper/react-native-animation/blob/main/assets/example/gif/ThemeSwitcher.gif" width="200" height="400" />      |
 | 💳 Card Pan Gesture                   | <img src="https://github.com/thejsdeveloper/react-native-animation/blob/main/assets/example/gif/pangesture.gif" width="200" height="400" />         |
@@ -18,6 +18,8 @@ This is a repo where I practice my React Native Animation Learnings with [Reanim
 | ⌚️ Watch Gallery                     | <img src="https://github.com/thejsdeveloper/react-native-animation/blob/main/assets/example/gif/watch.gif" width="200" height="400" />              |
 | ☞ 🛴 Bottom Tab                       | <img src="https://github.com/thejsdeveloper/react-native-animation/blob/main/assets/example/gif/BottomTabAnimation.gif" width="200" height="400" /> |
 | 💳 Card transition                    | <img src="https://github.com/thejsdeveloper/react-native-animation/blob/main/assets/example/gif/card-transition.gif" width="200" height="400" />    |
+| 💬 Chat Bubble                        | <img src="https://github.com/thejsdeveloper/react-native-animation/blob/main/assets/example/gif/chatBubble.gif" width="200" height="400" />         |
+| ⭕️ Circular Slider                   | <img src="https://github.com/thejsdeveloper/react-native-animation/blob/main/assets/example/gif/circular-slider.gif" width="200" height="400" />    |
 
 ## Developement Setup
 
