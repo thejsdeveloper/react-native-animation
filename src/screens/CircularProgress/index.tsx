@@ -34,14 +34,6 @@ const CircularProgress = () => {
     return progress.value > 0 ? "Reset" : "Start";
   });
 
-  const backgroundColor = useDerivedValue(() => {
-    return interpolateColor(
-      progress.value,
-      [0, 0.5, 1],
-      ["#ff3884", StyleGuide.palette.primary, "#38ffb3"]
-    );
-  });
-
   const onButtonPress = React.useCallback(() => {
     progress.value = withTiming(progress.value ? 0 : 1, {
       duration: 2000,
@@ -54,7 +46,7 @@ const CircularProgress = () => {
         <View style={[styles.content]}>
           <ReText style={styles.progressText} text={progressText} />
           <View style={styles.circleContainer}>
-            <ProgressCircle {...{ r, progress, backgroundColor }} />
+            <ProgressCircle {...{ r, progress }} />
           </View>
         </View>
 
@@ -89,8 +81,9 @@ const styles = StyleSheet.create({
 
   progressText: {
     textAlign: "center",
-    color: StyleGuide.palette.primary,
+    color: "#ff3884",
     fontSize: 80,
+    width: size,
   },
   button: {
     width: SCREEN_WIDTH,
