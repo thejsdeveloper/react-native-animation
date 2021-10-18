@@ -1,6 +1,7 @@
 import React from "react";
 import Bottombar from "../screens/Bottombar";
 import ChatAnimationScreen from "../screens/ChatAnimation";
+import CircularProgress from "../screens/CircularProgress";
 import CircularSlider from "../screens/CircularSlider";
 import PanGesture from "../screens/PanGesture";
 import SwipeSurfing from "../screens/SwipeSurfing";
@@ -23,6 +24,7 @@ export type Routes = {
   PanGesture: undefined;
   Animations: undefined;
   CircularSlider: undefined;
+  CircularProgress: undefined;
   Graph: undefined;
   DragToSort: undefined;
   DynamicSpring: undefined;
@@ -101,6 +103,12 @@ const getScreen = (): Screen[] => {
       screen: "CircularSlider",
       title: "⭕️ Circular Slider",
       component: CircularSlider,
+      showHeader,
+    },
+    {
+      screen: "CircularProgress",
+      title: "⏰ Circular Progress",
+      component: CircularProgress,
       showHeader,
     },
   ];
