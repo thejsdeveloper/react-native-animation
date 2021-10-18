@@ -10,19 +10,19 @@ const BACKGROUND_STROKE_COLOR = "#303858";
 const STROKE_COLOR = "#A6E1FA";
 
 type ProgressCircleProps = {
-  theta: Animated.SharedValue<number>;
+  progress: Animated.SharedValue<number>;
   r: number;
 };
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
-const ProgressCircle = ({ theta, r }: ProgressCircleProps) => {
+const ProgressCircle = ({ progress, r }: ProgressCircleProps) => {
   const radius = r - STROKE_WIDTH / 2;
   const circumsference = 2 * Math.PI * r;
 
   const animatedProps = useAnimatedProps(() => {
     return {
-      strokeDashoffset: theta.value * radius,
+      strokeDashoffset: circumsference * (1 - progress.value),
     };
   });
   return (
