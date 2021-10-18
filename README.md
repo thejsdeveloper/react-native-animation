@@ -20,6 +20,7 @@ This is a repo where I practice my React Native Animation Learnings with [Reanim
 | 💳 Card transition                    | <img src="https://github.com/thejsdeveloper/react-native-animation/blob/main/assets/example/gif/card-transition.gif" width="200" height="400" />    |
 | 💬 Chat Bubble                        | <img src="https://github.com/thejsdeveloper/react-native-animation/blob/main/assets/example/gif/chatBubble.gif" width="200" height="400" />         |
 | ⭕️ Circular Slider                   | <img src="https://github.com/thejsdeveloper/react-native-animation/blob/main/assets/example/gif/circular-slider.gif" width="200" height="400" />    |
+| ⏰ Circular Progress                  | <img src="https://github.com/thejsdeveloper/react-native-animation/blob/main/assets/example/gif/circularProgress.gif" width="200" height="400" />   |
 
 ## Developement Setup
 
