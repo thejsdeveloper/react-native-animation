@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 import {
+  interpolateColor,
   useDerivedValue,
   useSharedValue,
   withTiming,
@@ -24,8 +25,21 @@ const r = size / 2;
 
 const CircularProgress = () => {
   const progress = useSharedValue<number>(0);
+
+  const progressText = useDerivedValue(() => {
+    return `${Math.floor(progress.value * 100)}`;
+  });
+
   const buttonLabel = useDerivedValue(() => {
     return progress.value > 0 ? "Reset" : "Start";
+  });
+
+  const backgroundColor = useDerivedValue(() => {
+    return interpolateColor(
+      progress.value,
+      [0, 0.5, 1],
+      ["#ff3884", StyleGuide.palette.primary, "#38ffb3"]
+    );
   });
 
   const onButtonPress = React.useCallback(() => {
@@ -38,8 +52,9 @@ const CircularProgress = () => {
     <>
       <View style={styles.container}>
         <View style={[styles.content]}>
+          <ReText style={styles.progressText} text={progressText} />
           <View style={styles.circleContainer}>
-            <ProgressCircle {...{ r, progress }} />
+            <ProgressCircle {...{ r, progress, backgroundColor }} />
           </View>
         </View>
 
@@ -65,9 +80,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+
   circleContainer: {
+    position: "absolute",
     height: size,
     width: size,
+  },
+
+  progressText: {
+    textAlign: "center",
+    color: StyleGuide.palette.primary,
+    fontSize: 80,
   },
   button: {
     width: SCREEN_WIDTH,

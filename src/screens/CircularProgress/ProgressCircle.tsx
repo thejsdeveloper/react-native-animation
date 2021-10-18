@@ -12,16 +12,22 @@ const STROKE_COLOR = "#A6E1FA";
 type ProgressCircleProps = {
   progress: Animated.SharedValue<number>;
   r: number;
+  backgroundColor: Animated.SharedValue<string | number>;
 };
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
-const ProgressCircle = ({ progress, r }: ProgressCircleProps) => {
+const ProgressCircle = ({
+  progress,
+  r,
+  backgroundColor,
+}: ProgressCircleProps) => {
   const radius = r - STROKE_WIDTH / 2;
   const circumsference = 2 * Math.PI * r;
 
   const animatedProps = useAnimatedProps(() => {
     return {
+      stroke: backgroundColor.value,
       strokeDashoffset: circumsference * (1 - progress.value),
     };
   });
@@ -43,7 +49,6 @@ const ProgressCircle = ({ progress, r }: ProgressCircleProps) => {
         cy={r}
         r={radius}
         strokeDasharray={circumsference}
-        stroke={StyleGuide.palette.primary}
         fill="transparent"
         strokeWidth={PROGRESS_STROKE_WIDTH}
         strokeLinecap={"round"}
