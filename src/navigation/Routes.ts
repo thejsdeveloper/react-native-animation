@@ -3,6 +3,7 @@ import Bottombar from "../screens/Bottombar";
 import ChatAnimationScreen from "../screens/ChatAnimation";
 import CircularProgress from "../screens/CircularProgress";
 import CircularSlider from "../screens/CircularSlider";
+import GraphInteraction from "../screens/GraphInteraction";
 import PanGesture from "../screens/PanGesture";
 import SwipeSurfing from "../screens/SwipeSurfing";
 import DemoSwipeToDelete from "../screens/SwipeToDelete";
@@ -109,6 +110,12 @@ const getScreen = (): Screen[] => {
       screen: "CircularProgress",
       title: "⏰ Circular Progress",
       component: CircularProgress,
+      showHeader,
+    },
+    {
+      screen: "Graph",
+      title: "⏰ Graph",
+      component: GraphInteraction,
       showHeader,
     },
   ];
