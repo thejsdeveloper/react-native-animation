@@ -9,6 +9,7 @@ import SwipeSurfing from "../screens/SwipeSurfing";
 import DemoSwipeToDelete from "../screens/SwipeToDelete";
 import TapToLike from "../screens/TapGesture";
 import ThemeScreen from "../screens/Theming";
+import Swipe from "../screens/tinderSwipe";
 import TransitionScreen from "../screens/transition";
 import DemoSwipeToDeleteWithUserFeedback from "../screens/UserFeedbackSwipeToDelete";
 
@@ -29,7 +30,7 @@ export type Routes = {
   Graph: undefined;
   DragToSort: undefined;
   DynamicSpring: undefined;
-  Swiping: undefined;
+  TinderSwiping: undefined;
   Bezier: undefined;
   ShapeMorphing: undefined;
   Accordion: undefined;
@@ -116,6 +117,12 @@ const getScreen = (): Screen[] => {
       screen: "Graph",
       title: "⏰ Graph",
       component: GraphInteraction,
+      showHeader,
+    },
+    {
+      screen: "TinderSwiping",
+      title: "🃏 TinderSwiping",
+      component: Swipe,
       showHeader,
     },
   ];
