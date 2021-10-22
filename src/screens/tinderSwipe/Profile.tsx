@@ -8,14 +8,26 @@ export type ProfileModel = {
   profile: number;
 };
 
-const Profile = () => {
+type ProfileProps = {
+  profile: ProfileModel;
+  onTop: boolean;
+};
+
+const Profile = ({ profile, onTop }: ProfileProps) => {
   return (
-    <View>
-      <Text>Profiles</Text>
+    <View style={[StyleSheet.absoluteFill]}>
+      <View style={styles.overlay}>
+        <View style={styles.header}></View>
+        <View style={styles.footer}></View>
+      </View>
     </View>
   );
 };
 
 export default Profile;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  overlay: {},
+  header: {},
+  footer: {},
+});
