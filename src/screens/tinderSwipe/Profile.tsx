@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 
 export type ProfileModel = {
   id: string;
@@ -16,10 +16,11 @@ type ProfileProps = {
 const Profile = ({ profile, onTop }: ProfileProps) => {
   return (
     <View style={[StyleSheet.absoluteFill]}>
-      <View style={styles.overlay}>
+      <Image style={styles.image} source={profile.profile} />
+      {/* <View style={styles.overlay}>
         <View style={styles.header}></View>
         <View style={styles.footer}></View>
-      </View>
+      </View> */}
     </View>
   );
 };
@@ -27,6 +28,12 @@ const Profile = ({ profile, onTop }: ProfileProps) => {
 export default Profile;
 
 const styles = StyleSheet.create({
+  image: {
+    ...StyleSheet.absoluteFillObject,
+    width: undefined,
+    height: undefined,
+    borderRadius: 8,
+  },
   overlay: {},
   header: {},
   footer: {},

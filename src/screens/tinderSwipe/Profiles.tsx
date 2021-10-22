@@ -4,19 +4,26 @@ import { Feather as Icon } from "@expo/vector-icons";
 import StyleGuide from "../../components/StyleGuide";
 import { RectButton } from "react-native-gesture-handler";
 import { ProfileModel } from "./Profile";
+import Swipable from "./Swipable";
 
 type ProfileProps = {
   profiles: ProfileModel[];
 };
 
 const Profiles = ({ profiles }: ProfileProps) => {
+  const onSwipe = () => {};
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Icon name="user" size={32} color="gray" />
         <Icon name="message-circle" size={32} color="gray" />
       </View>
-      <View style={styles.cards}></View>
+      <View style={styles.cards}>
+        {profiles.map((profile, index) => {
+          const onTop = index === profiles.length - 1;
+          return <Swipable key={profile.id} {...{ profile, onTop, onSwipe }} />;
+        })}
+      </View>
       <View style={styles.footer}>
         <RectButton style={styles.circle}>
           <Icon name="x" size={32} color="#ec5288" />
@@ -36,21 +43,21 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: StyleGuide.palette.background,
     justifyContent: "space-evenly",
-    paddingHorizontal: 16,
   },
   header: {
     flexDirection: "row",
-    alignItems: "center",
     justifyContent: "space-between",
+    padding: 16,
   },
   cards: {
     flex: 1,
     zIndex: 100,
+    marginHorizontal: 16,
   },
   footer: {
     flexDirection: "row",
-    alignItems: "center",
     justifyContent: "space-evenly",
+    padding: 16,
   },
   circle: {
     width: 64,
